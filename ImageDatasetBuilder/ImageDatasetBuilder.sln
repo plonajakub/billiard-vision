@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDatasetBuilder", "ImageDatasetBuilder.csproj", "{A807B4A6-7044-40B4-B4F5-FB1032BAC290}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A807B4A6-7044-40B4-B4F5-FB1032BAC290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A807B4A6-7044-40B4-B4F5-FB1032BAC290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A807B4A6-7044-40B4-B4F5-FB1032BAC290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A807B4A6-7044-40B4-B4F5-FB1032BAC290}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {484E1554-87A7-4AB4-8018-20A73B6208BC}
+	EndGlobalSection
+EndGlobal
