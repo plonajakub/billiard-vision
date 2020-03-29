@@ -56,6 +56,8 @@
             this.filmPathStatusLabel = new System.Windows.Forms.Label();
             this.filmPathInfoLabel = new System.Windows.Forms.Label();
             this.imgDatasetCreaterTabPage = new System.Windows.Forms.TabPage();
+            this.selected_type_label = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
             this.filmToImageTabPage.SuspendLayout();
             this.convertionStatusGroupBox.SuspendLayout();
@@ -66,6 +68,8 @@
             this.filePropertiesGroupBox.SuspendLayout();
             this.imagesDirectoryPanel.SuspendLayout();
             this.filmPathPanel.SuspendLayout();
+            this.imgDatasetCreaterTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -77,6 +81,7 @@
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(1132, 591);
             this.mainTabControl.TabIndex = 0;
+            this.mainTabControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mainTabControl_KeyPress);
             // 
             // filmToImageTabPage
             // 
@@ -345,6 +350,8 @@
             // 
             // imgDatasetCreaterTabPage
             // 
+            this.imgDatasetCreaterTabPage.Controls.Add(this.selected_type_label);
+            this.imgDatasetCreaterTabPage.Controls.Add(this.pictureBox1);
             this.imgDatasetCreaterTabPage.Location = new System.Drawing.Point(4, 25);
             this.imgDatasetCreaterTabPage.Name = "imgDatasetCreaterTabPage";
             this.imgDatasetCreaterTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -352,6 +359,27 @@
             this.imgDatasetCreaterTabPage.TabIndex = 1;
             this.imgDatasetCreaterTabPage.Text = "Image Dataset Creator";
             this.imgDatasetCreaterTabPage.UseVisualStyleBackColor = true;
+            this.imgDatasetCreaterTabPage.Click += new System.EventHandler(this.imgDatasetCreaterTabPage_Click);
+            // 
+            // selected_type_label
+            // 
+            this.selected_type_label.AutoSize = true;
+            this.selected_type_label.BackColor = System.Drawing.Color.Yellow;
+            this.selected_type_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.selected_type_label.Location = new System.Drawing.Point(12, 108);
+            this.selected_type_label.Name = "selected_type_label";
+            this.selected_type_label.Size = new System.Drawing.Size(42, 46);
+            this.selected_type_label.TabIndex = 1;
+            this.selected_type_label.Text = "1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(60, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1068, 553);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // mainForm
             // 
@@ -372,6 +400,9 @@
             this.filePropertiesGroupBox.ResumeLayout(false);
             this.imagesDirectoryPanel.ResumeLayout(false);
             this.filmPathPanel.ResumeLayout(false);
+            this.imgDatasetCreaterTabPage.ResumeLayout(false);
+            this.imgDatasetCreaterTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -406,6 +437,8 @@
         private System.Windows.Forms.ProgressBar conversionProgressBar;
         private System.Windows.Forms.Button chooseOutputDirectoryButton;
         private System.Windows.Forms.Button chooseFilmButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label selected_type_label;
     }
 }
 
