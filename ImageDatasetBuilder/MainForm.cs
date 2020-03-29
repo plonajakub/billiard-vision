@@ -12,12 +12,15 @@ using System.Windows.Forms;
 namespace ImageDatasetBuilder
 {
     using Type = HelperStructures.ObjectType;
+
+    
+
     public partial class mainForm : Form
     {
         private readonly MediaService mediaService = new MediaService();
 
         private Type selectedType = Type.B1;
-
+        List<Item> results = new List<Item>();
         Point leftUpCorner;
         Point rightBotCorner;
         public mainForm()
@@ -89,13 +92,23 @@ namespace ImageDatasetBuilder
             else
             {
                 rightBotCorner = coordinates;
-                redrawRectangle();
+                addToResult();
             }
+            
         }
 
-        private void redrawRectangle()
+        private void addToResult()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            //adding rectangle to list with results
+            results.Add(new Item(new Point(leftUpCorner.X, leftUpCorner.Y), new Point(rightBotCorner.X, rightBotCorner.Y), selectedType));
+            leftUpCorner = Point.Empty;
+            rightBotCorner = Point.Empty;
+        }
+        private void cancalPrev()
+        {
+            //removing last selection
+            results.RemoveAt(results.Count - 1);
         }
 
         private void nextPicture()
@@ -161,7 +174,7 @@ namespace ImageDatasetBuilder
                     selectedType = Type.Hole;
                     break;
                 case 'c':
-                    clearSelection();
+                    cancalPrev();
                     break;
                 
                 case ' ':
@@ -171,6 +184,53 @@ namespace ImageDatasetBuilder
 
             selected_type_label.Text = new HelperStructures().ObjectTypeMapping[selectedType];
 
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!leftUpCorner.IsEmpty)
+            {
+                //drawing box when cursor moves
+                Graphics g = pictureBox1.CreateGraphics();
+                g.Clear(Color.White);
+                foreach(Item element in results)
+                    {
+                    g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(element.getLeft(), element.getTop(), element.getRight(), element.getDown()));
+                    }
+                g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(leftUpCorner.X, leftUpCorner.Y, pictureBox1.PointToClient(Cursor.Position).X, pictureBox1.PointToClient(Cursor.Position).Y));
+                g.Dispose();
+            }
+        }
+
+       
+    }
+    public class Item
+    {
+        //selected item
+        private Point lU;
+        private Point rD;
+        private Type type;
+        public Item(Point LU, Point RD, Type Type)
+        {
+            lU = LU;
+            rD = RD;
+            type = Type;
+        }
+        public int getLeft()
+        {
+            return lU.X;
+        }
+        public int getTop()
+        {
+            return lU.Y;
+        }
+        public int getRight()
+        {
+            return rD.X;
+        }
+        public int getDown()
+        {
+            return rD.Y;
         }
 
     }

@@ -366,7 +366,7 @@
             this.selected_type_label.AutoSize = true;
             this.selected_type_label.BackColor = System.Drawing.Color.Yellow;
             this.selected_type_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.selected_type_label.Location = new System.Drawing.Point(12, 108);
+            this.selected_type_label.Location = new System.Drawing.Point(6, 6);
             this.selected_type_label.Name = "selected_type_label";
             this.selected_type_label.Size = new System.Drawing.Size(42, 46);
             this.selected_type_label.TabIndex = 1;
@@ -374,12 +374,13 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(60, 6);
+            this.pictureBox1.Location = new System.Drawing.Point(54, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1068, 553);
+            this.pictureBox1.Size = new System.Drawing.Size(1074, 553);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // mainForm
             // 
