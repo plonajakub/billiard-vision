@@ -12,20 +12,41 @@ using System.Windows.Forms;
 namespace ImageDatasetBuilder
 {
     using Type = HelperStructures.ObjectType;
+    using Frame = CsvService.ImageExample;
 
-    
-
+   
     public partial class mainForm : Form
     {
         private readonly MediaService mediaService = new MediaService();
-
+        private const string CSV_PATH = ".\\tags.csv";
+        private const string PICTURES_FORMAT = ".png";
+        private const string FILES_FORMAT = "*" + PICTURES_FORMAT;
+        private const string PROCESSED_FILES_PATH = ".\\processed\\";
+        private const string UNPROCESSED_FILES_PATH = ".\\unprocessed\\";
         private Type selectedType = Type.B1;
-        List<Item> results = new List<Item>();
+        List<Frame> selected_areas = new List<Frame>();
+        Frame current_frame = new Frame();
+        CsvService csv = new CsvService();
+        IndexGenerator gen = new IndexGenerator();
+        string[] images;
+        System.Collections.IEnumerator images_enumerator;
+
+        Image image;
         Point leftUpCorner;
         Point rightBotCorner;
+        private bool createdCsv = false;
+
         public mainForm()
         {
+            
             InitializeComponent();
+
+            images = Directory.GetFiles(UNPROCESSED_FILES_PATH, FILES_FORMAT, SearchOption.AllDirectories);
+            if(images.Count() > 0)
+            { 
+                images_enumerator = images.GetEnumerator();
+                loadNextImage();
+            }
         }
 
         private void ChooseFilmButton_Click(object sender, EventArgs e)
@@ -77,11 +98,6 @@ namespace ImageDatasetBuilder
             }
         }
 
-        private void imgDatasetCreaterTabPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             var coordinates = pictureBox1.PointToClient(Cursor.Position);
@@ -92,34 +108,90 @@ namespace ImageDatasetBuilder
             else
             {
                 rightBotCorner = coordinates;
-                addToResult();
             }
             
         }
 
-        private void addToResult()
+        private void addArea()
         {
-            //throw new NotImplementedException();
-            //adding rectangle to list with results
-            results.Add(new Item(new Point(leftUpCorner.X, leftUpCorner.Y), new Point(rightBotCorner.X, rightBotCorner.Y), selectedType));
+            current_frame.Height = image.Height;
+            current_frame.Width = image.Width;
+            current_frame.XMin = leftUpCorner.X;
+            current_frame.YMin = leftUpCorner.Y;
+            current_frame.XMax = rightBotCorner.X;
+            current_frame.YMax = rightBotCorner.Y;
+            current_frame.ImageFormat = PICTURES_FORMAT;
+            current_frame.Class = new HelperStructures().ObjectTypeMapping[selectedType];
+            selected_areas.Add(current_frame);
             leftUpCorner = Point.Empty;
             rightBotCorner = Point.Empty;
         }
-        private void cancalPrev()
+        private void cancelPrev()
         {
             //removing last selection
-            results.RemoveAt(results.Count - 1);
+            if (leftUpCorner.IsEmpty)
+            { 
+                if(selected_areas.Count > 0)
+                { 
+                    selected_areas.RemoveAt(selected_areas.Count - 1);
+                }
+            }
+            else
+            {
+                leftUpCorner = Point.Empty;
+                rightBotCorner = Point.Empty;
+            }
+           
         }
 
         private void nextPicture()
         {
-            throw new NotImplementedException();
+            var filename = "";
+            if (selected_areas.Count == 0)
+            {
+                loadNextImage();
+                return;
+            }
+            else if (selected_areas.Count == 1)
+            {
+                var object_class = selected_areas[0].Class;
+                filename = object_class + "_" + gen.next_index(object_class) + PICTURES_FORMAT;
+                selected_areas[0].Filename = filename;
+            }
+            else
+            {
+                filename = "multi_" + gen.next_index("multi") + PICTURES_FORMAT;
+                foreach (Frame element in selected_areas)
+                {
+                    element.Filename = filename;
+                }
+                nextPicture();
+            }
+
+            if (createdCsv)
+            {
+                csv.AppendToCsv(CSV_PATH , selected_areas);
+            }
+            else
+            {
+                csv.WriteCsv(CSV_PATH , selected_areas);
+                createdCsv = true;
+            }
+
+            File.Move(UNPROCESSED_FILES_PATH + images_enumerator.Current.ToString(), PROCESSED_FILES_PATH + filename);
         }
 
-        private void clearSelection()
+        private void loadNextImage()
         {
-            throw new NotImplementedException();
+            if(images_enumerator.MoveNext())
+            {
+                image = Image.FromFile(images_enumerator.Current.ToString());
+            }
+            selected_areas.Clear();
+            pictureBox1.Image = image; 
         }
+
+
 
         private void mainTabControl_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -173,10 +245,15 @@ namespace ImageDatasetBuilder
                 case 'h':
                     selectedType = Type.Hole;
                     break;
-                case 'c':
-                    cancalPrev();
+                case 'b':
+                    selectedType = Type.White;
                     break;
-                
+                case 'c':
+                    cancelPrev();
+                    break;
+                case 'n':
+                    addArea();
+                    break;
                 case ' ':
                     nextPicture();
                     break;
@@ -185,53 +262,26 @@ namespace ImageDatasetBuilder
             selected_type_label.Text = new HelperStructures().ObjectTypeMapping[selectedType];
 
         }
-
+        private void drawRectangles()
+        {
+            /*
+            foreach (Frame element in selected_areas)
+            {
+                g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(Convert.ToInt32(element.XMin), Convert.ToInt32(element.YMin), Convert.ToInt32(element.XMax), Convert.ToInt32(element.YMax)));
+            }
+            g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(leftUpCorner.X, leftUpCorner.Y, pictureBox1.PointToClient(Cursor.Position).X, pictureBox1.PointToClient(Cursor.Position).Y));
+            g.Dispose();
+            */
+        }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (!leftUpCorner.IsEmpty)
             {
-                //drawing box when cursor moves
-                Graphics g = pictureBox1.CreateGraphics();
-                g.Clear(Color.White);
-                foreach(Item element in results)
-                    {
-                    g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(element.getLeft(), element.getTop(), element.getRight(), element.getDown()));
-                    }
-                g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(leftUpCorner.X, leftUpCorner.Y, pictureBox1.PointToClient(Cursor.Position).X, pictureBox1.PointToClient(Cursor.Position).Y));
-                g.Dispose();
+                drawRectangles();
             }
         }
+       
 
        
-    }
-    public class Item
-    {
-        //selected item
-        private Point lU;
-        private Point rD;
-        private Type type;
-        public Item(Point LU, Point RD, Type Type)
-        {
-            lU = LU;
-            rD = RD;
-            type = Type;
-        }
-        public int getLeft()
-        {
-            return lU.X;
-        }
-        public int getTop()
-        {
-            return lU.Y;
-        }
-        public int getRight()
-        {
-            return rD.X;
-        }
-        public int getDown()
-        {
-            return rD.Y;
-        }
-
     }
 }

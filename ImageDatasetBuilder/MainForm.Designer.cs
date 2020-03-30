@@ -79,7 +79,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(13, 13);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1132, 591);
+            this.mainTabControl.Size = new System.Drawing.Size(1200, 800);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mainTabControl_KeyPress);
             // 
@@ -91,7 +91,7 @@
             this.filmToImageTabPage.Location = new System.Drawing.Point(4, 25);
             this.filmToImageTabPage.Name = "filmToImageTabPage";
             this.filmToImageTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.filmToImageTabPage.Size = new System.Drawing.Size(1124, 562);
+            this.filmToImageTabPage.Size = new System.Drawing.Size(1192, 771);
             this.filmToImageTabPage.TabIndex = 0;
             this.filmToImageTabPage.Text = "Film-To-Image Converter";
             this.filmToImageTabPage.UseVisualStyleBackColor = true;
@@ -359,7 +359,6 @@
             this.imgDatasetCreaterTabPage.TabIndex = 1;
             this.imgDatasetCreaterTabPage.Text = "Image Dataset Creator";
             this.imgDatasetCreaterTabPage.UseVisualStyleBackColor = true;
-            this.imgDatasetCreaterTabPage.Click += new System.EventHandler(this.imgDatasetCreaterTabPage_Click);
             // 
             // selected_type_label
             // 
