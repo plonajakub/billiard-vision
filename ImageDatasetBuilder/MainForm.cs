@@ -19,7 +19,7 @@ namespace ImageDatasetBuilder
     {
         private readonly MediaService mediaService = new MediaService();
         private const string CSV_PATH = ".\\tags.csv";
-        private const string PICTURES_FORMAT = ".png";
+        private const string PICTURES_FORMAT = ".jpg";
         private const string FILES_FORMAT = "*" + PICTURES_FORMAT;
         private const string PROCESSED_FILES_PATH = ".\\processed\\";
         private const string UNPROCESSED_FILES_PATH = ".\\unprocessed\\";
@@ -264,6 +264,8 @@ namespace ImageDatasetBuilder
         }
         private void drawRectangles()
         {
+
+            //
             /*
             foreach (Frame element in selected_areas)
             {
@@ -280,8 +282,10 @@ namespace ImageDatasetBuilder
                 drawRectangles();
             }
         }
-       
 
-       
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

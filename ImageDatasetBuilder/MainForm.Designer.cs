@@ -56,6 +56,10 @@
             this.filmPathStatusLabel = new System.Windows.Forms.Label();
             this.filmPathInfoLabel = new System.Windows.Forms.Label();
             this.imgDatasetCreaterTabPage = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.selected_type_label = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
@@ -79,7 +83,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(13, 13);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1200, 800);
+            this.mainTabControl.Size = new System.Drawing.Size(1891, 1023);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mainTabControl_KeyPress);
             // 
@@ -91,7 +95,7 @@
             this.filmToImageTabPage.Location = new System.Drawing.Point(4, 25);
             this.filmToImageTabPage.Name = "filmToImageTabPage";
             this.filmToImageTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.filmToImageTabPage.Size = new System.Drawing.Size(1192, 771);
+            this.filmToImageTabPage.Size = new System.Drawing.Size(1883, 994);
             this.filmToImageTabPage.TabIndex = 0;
             this.filmToImageTabPage.Text = "Film-To-Image Converter";
             this.filmToImageTabPage.UseVisualStyleBackColor = true;
@@ -350,32 +354,72 @@
             // 
             // imgDatasetCreaterTabPage
             // 
+            this.imgDatasetCreaterTabPage.Controls.Add(this.textBox1);
+            this.imgDatasetCreaterTabPage.Controls.Add(this.label3);
+            this.imgDatasetCreaterTabPage.Controls.Add(this.label2);
+            this.imgDatasetCreaterTabPage.Controls.Add(this.label1);
             this.imgDatasetCreaterTabPage.Controls.Add(this.selected_type_label);
             this.imgDatasetCreaterTabPage.Controls.Add(this.pictureBox1);
             this.imgDatasetCreaterTabPage.Location = new System.Drawing.Point(4, 25);
             this.imgDatasetCreaterTabPage.Name = "imgDatasetCreaterTabPage";
             this.imgDatasetCreaterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.imgDatasetCreaterTabPage.Size = new System.Drawing.Size(1124, 562);
+            this.imgDatasetCreaterTabPage.Size = new System.Drawing.Size(1883, 994);
             this.imgDatasetCreaterTabPage.TabIndex = 1;
             this.imgDatasetCreaterTabPage.Text = "Image Dataset Creator";
             this.imgDatasetCreaterTabPage.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(22, 183);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(128, 331);
+            this.textBox1.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 146);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 17);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "size:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "output_filename:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 80);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(31, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "src:";
             // 
             // selected_type_label
             // 
             this.selected_type_label.AutoSize = true;
             this.selected_type_label.BackColor = System.Drawing.Color.Yellow;
+            this.selected_type_label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.selected_type_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.selected_type_label.Location = new System.Drawing.Point(6, 6);
+            this.selected_type_label.Location = new System.Drawing.Point(57, 6);
             this.selected_type_label.Name = "selected_type_label";
-            this.selected_type_label.Size = new System.Drawing.Size(42, 46);
+            this.selected_type_label.Size = new System.Drawing.Size(44, 48);
             this.selected_type_label.TabIndex = 1;
             this.selected_type_label.Text = "1";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(54, 6);
+            this.pictureBox1.Location = new System.Drawing.Point(169, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1074, 553);
+            this.pictureBox1.Size = new System.Drawing.Size(1704, 982);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -385,7 +429,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1157, 616);
+            this.ClientSize = new System.Drawing.Size(1902, 1033);
             this.Controls.Add(this.mainTabControl);
             this.Name = "mainForm";
             this.Text = "Image Dataset Builder v0.1";
@@ -439,6 +483,10 @@
         private System.Windows.Forms.Button chooseFilmButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label selected_type_label;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 
