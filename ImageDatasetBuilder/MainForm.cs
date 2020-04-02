@@ -19,7 +19,7 @@ namespace ImageDatasetBuilder
     {
         private readonly MediaService mediaService = new MediaService();
         private const string CSV_PATH = ".\\tags.csv";
-        private const string PICTURES_FORMAT = ".jpg";
+        private const string PICTURES_FORMAT = ".png";
         private const string FILES_FORMAT = "*" + PICTURES_FORMAT;
         private const string PROCESSED_FILES_PATH = ".\\processed\\";
         private const string UNPROCESSED_FILES_PATH = ".\\unprocessed\\";
@@ -30,6 +30,7 @@ namespace ImageDatasetBuilder
         IndexGenerator gen = new IndexGenerator();
         string[] images;
         System.Collections.IEnumerator images_enumerator;
+        string output_file_name;
 
         Image image;
         Point leftUpCorner;
@@ -45,7 +46,7 @@ namespace ImageDatasetBuilder
             if(images.Count() > 0)
             { 
                 images_enumerator = images.GetEnumerator();
-                loadNextImage();
+                nextPicture();
             }
         }
 
@@ -125,7 +126,38 @@ namespace ImageDatasetBuilder
             selected_areas.Add(current_frame);
             leftUpCorner = Point.Empty;
             rightBotCorner = Point.Empty;
+
+            updateUI();
         }
+
+        private void updateUI()
+        {
+
+            textBox1.Clear();
+            foreach (var area in selected_areas)
+            {
+                textBox1.AppendText(area.ToString() + "\n");
+            }
+            if(selected_areas.Count() == 0)
+            {
+                output_file_name = "";
+            } else if (selected_areas.Count() == 1)
+            {
+                var object_class = selected_areas[0].Class;
+                output_file_name = object_class + "_" + gen.next_index(object_class) + PICTURES_FORMAT;
+            }
+            else
+            {
+                output_file_name = "multi_" + gen.next_index("multi") + PICTURES_FORMAT;
+            }
+
+            output_file_label.Text = output_file_name;
+
+            source_file_label.Text = images_enumerator.Current.ToString();
+
+            size_label.Text = "(w=" + image.Width + ", h=" + image.Height + ")";           
+        }
+
         private void cancelPrev()
         {
             //removing last selection
@@ -141,31 +173,33 @@ namespace ImageDatasetBuilder
                 leftUpCorner = Point.Empty;
                 rightBotCorner = Point.Empty;
             }
+
+            updateUI();
            
         }
 
         private void nextPicture()
         {
-            var filename = "";
             if (selected_areas.Count == 0)
             {
                 loadNextImage();
+                updateUI();
                 return;
             }
             else if (selected_areas.Count == 1)
             {
-                var object_class = selected_areas[0].Class;
-                filename = object_class + "_" + gen.next_index(object_class) + PICTURES_FORMAT;
-                selected_areas[0].Filename = filename;
+                
+                selected_areas[0].Filename = output_file_name;
+                loadNextImage();
             }
             else
             {
-                filename = "multi_" + gen.next_index("multi") + PICTURES_FORMAT;
+                
                 foreach (Frame element in selected_areas)
                 {
-                    element.Filename = filename;
+                    element.Filename = output_file_name;
                 }
-                nextPicture();
+                loadNextImage();
             }
 
             if (createdCsv)
@@ -178,7 +212,9 @@ namespace ImageDatasetBuilder
                 createdCsv = true;
             }
 
-            File.Move(UNPROCESSED_FILES_PATH + images_enumerator.Current.ToString(), PROCESSED_FILES_PATH + filename);
+            
+            File.Move(UNPROCESSED_FILES_PATH + images_enumerator.Current.ToString(), PROCESSED_FILES_PATH + output_file_name);
+            updateUI();
         }
 
         private void loadNextImage()
@@ -188,6 +224,7 @@ namespace ImageDatasetBuilder
                 image = Image.FromFile(images_enumerator.Current.ToString());
             }
             selected_areas.Clear();
+            pictureBox1.Image.Dispose();
             pictureBox1.Image = image; 
         }
 
@@ -283,7 +320,7 @@ namespace ImageDatasetBuilder
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
         }
