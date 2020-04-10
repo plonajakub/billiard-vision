@@ -28,521 +28,152 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.filmToImageTabPage = new System.Windows.Forms.TabPage();
-            this.convertionStatusGroupBox = new System.Windows.Forms.GroupBox();
-            this.conversionStatusLabel = new System.Windows.Forms.Label();
-            this.conversionButton = new System.Windows.Forms.Button();
-            this.conversionProgressBar = new System.Windows.Forms.ProgressBar();
-            this.convertionAttributesGroupBox = new System.Windows.Forms.GroupBox();
-            this.durutionValueLabel = new System.Windows.Forms.Label();
-            this.stepValueLabel = new System.Windows.Forms.Label();
-            this.offsetValueLabel = new System.Windows.Forms.Label();
-            this.durutionTrackBar = new System.Windows.Forms.TrackBar();
-            this.durutionConstantLabel = new System.Windows.Forms.Label();
-            this.stepTrackBar = new System.Windows.Forms.TrackBar();
-            this.offsetTrackBar = new System.Windows.Forms.TrackBar();
-            this.stepConstantLabel = new System.Windows.Forms.Label();
-            this.offsetConstantLabel = new System.Windows.Forms.Label();
-            this.filePropertiesGroupBox = new System.Windows.Forms.GroupBox();
-            this.chooseOutputDirectoryButton = new System.Windows.Forms.Button();
-            this.chooseFilmButton = new System.Windows.Forms.Button();
-            this.imagesDirectoryPanel = new System.Windows.Forms.Panel();
-            this.outputDirectoryConstantLabel = new System.Windows.Forms.Label();
-            this.outputDirectoryStateLabel = new System.Windows.Forms.Label();
-            this.outputDirectoryInfoLabel = new System.Windows.Forms.Label();
-            this.filmPathPanel = new System.Windows.Forms.Panel();
-            this.filmPathConstantLabel = new System.Windows.Forms.Label();
-            this.filmPathStatusLabel = new System.Windows.Forms.Label();
-            this.filmPathInfoLabel = new System.Windows.Forms.Label();
-            this.imgDatasetCreaterTabPage = new System.Windows.Forms.TabPage();
-            this.size_label = new System.Windows.Forms.Label();
-            this.output_file_label = new System.Windows.Forms.Label();
-            this.source_file_label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.selected_type_label = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.mainTabControl.SuspendLayout();
-            this.filmToImageTabPage.SuspendLayout();
-            this.convertionStatusGroupBox.SuspendLayout();
-            this.convertionAttributesGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.durutionTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stepTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.offsetTrackBar)).BeginInit();
-            this.filePropertiesGroupBox.SuspendLayout();
-            this.imagesDirectoryPanel.SuspendLayout();
-            this.filmPathPanel.SuspendLayout();
-            this.imgDatasetCreaterTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.classLabel = new System.Windows.Forms.Label();
+            this.sourceConstantLabel = new System.Windows.Forms.Label();
+            this.outputConstantLabel = new System.Windows.Forms.Label();
+            this.sizeConstantLabel = new System.Windows.Forms.Label();
+            this.textBox = new System.Windows.Forms.TextBox();
+            this.sourceFileLabel = new System.Windows.Forms.Label();
+            this.outputFileLabel = new System.Windows.Forms.Label();
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.infoPanel = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.infoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Controls.Add(this.filmToImageTabPage);
-            this.mainTabControl.Controls.Add(this.imgDatasetCreaterTabPage);
-            this.mainTabControl.Location = new System.Drawing.Point(13, 14);
-            this.mainTabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1891, 1023);
-            this.mainTabControl.TabIndex = 0;
-            this.mainTabControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mainTabControl_KeyPress);
-            // 
-            // filmToImageTabPage
-            // 
-            this.filmToImageTabPage.Controls.Add(this.convertionStatusGroupBox);
-            this.filmToImageTabPage.Controls.Add(this.convertionAttributesGroupBox);
-            this.filmToImageTabPage.Controls.Add(this.filePropertiesGroupBox);
-            this.filmToImageTabPage.Location = new System.Drawing.Point(4, 25);
-            this.filmToImageTabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filmToImageTabPage.Name = "filmToImageTabPage";
-            this.filmToImageTabPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filmToImageTabPage.Size = new System.Drawing.Size(1883, 994);
-            this.filmToImageTabPage.TabIndex = 0;
-            this.filmToImageTabPage.Text = "Film-To-Image Converter";
-            this.filmToImageTabPage.UseVisualStyleBackColor = true;
-            // 
-            // convertionStatusGroupBox
-            // 
-            this.convertionStatusGroupBox.Controls.Add(this.conversionStatusLabel);
-            this.convertionStatusGroupBox.Controls.Add(this.conversionButton);
-            this.convertionStatusGroupBox.Controls.Add(this.conversionProgressBar);
-            this.convertionStatusGroupBox.Location = new System.Drawing.Point(5, 319);
-            this.convertionStatusGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.convertionStatusGroupBox.Name = "convertionStatusGroupBox";
-            this.convertionStatusGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.convertionStatusGroupBox.Size = new System.Drawing.Size(1112, 238);
-            this.convertionStatusGroupBox.TabIndex = 2;
-            this.convertionStatusGroupBox.TabStop = false;
-            this.convertionStatusGroupBox.Text = "Convertion status";
-            // 
-            // conversionStatusLabel
-            // 
-            this.conversionStatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.conversionStatusLabel.Location = new System.Drawing.Point(473, 138);
-            this.conversionStatusLabel.Name = "conversionStatusLabel";
-            this.conversionStatusLabel.Size = new System.Drawing.Size(171, 81);
-            this.conversionStatusLabel.TabIndex = 2;
-            this.conversionStatusLabel.Text = "*conversion status*";
-            this.conversionStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // conversionButton
-            // 
-            this.conversionButton.Location = new System.Drawing.Point(5, 34);
-            this.conversionButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.conversionButton.Name = "conversionButton";
-            this.conversionButton.Size = new System.Drawing.Size(128, 43);
-            this.conversionButton.TabIndex = 1;
-            this.conversionButton.Text = "Convert";
-            this.conversionButton.UseVisualStyleBackColor = true;
-            // 
-            // conversionProgressBar
-            // 
-            this.conversionProgressBar.Location = new System.Drawing.Point(5, 82);
-            this.conversionProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.conversionProgressBar.Name = "conversionProgressBar";
-            this.conversionProgressBar.Size = new System.Drawing.Size(1099, 30);
-            this.conversionProgressBar.TabIndex = 0;
-            // 
-            // convertionAttributesGroupBox
-            // 
-            this.convertionAttributesGroupBox.Controls.Add(this.durutionValueLabel);
-            this.convertionAttributesGroupBox.Controls.Add(this.stepValueLabel);
-            this.convertionAttributesGroupBox.Controls.Add(this.offsetValueLabel);
-            this.convertionAttributesGroupBox.Controls.Add(this.durutionTrackBar);
-            this.convertionAttributesGroupBox.Controls.Add(this.durutionConstantLabel);
-            this.convertionAttributesGroupBox.Controls.Add(this.stepTrackBar);
-            this.convertionAttributesGroupBox.Controls.Add(this.offsetTrackBar);
-            this.convertionAttributesGroupBox.Controls.Add(this.stepConstantLabel);
-            this.convertionAttributesGroupBox.Controls.Add(this.offsetConstantLabel);
-            this.convertionAttributesGroupBox.Location = new System.Drawing.Point(579, 7);
-            this.convertionAttributesGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.convertionAttributesGroupBox.Name = "convertionAttributesGroupBox";
-            this.convertionAttributesGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.convertionAttributesGroupBox.Size = new System.Drawing.Size(539, 306);
-            this.convertionAttributesGroupBox.TabIndex = 1;
-            this.convertionAttributesGroupBox.TabStop = false;
-            this.convertionAttributesGroupBox.Text = "Convertion attributes";
-            // 
-            // durutionValueLabel
-            // 
-            this.durutionValueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.durutionValueLabel.Location = new System.Drawing.Point(431, 191);
-            this.durutionValueLabel.Name = "durutionValueLabel";
-            this.durutionValueLabel.Size = new System.Drawing.Size(87, 55);
-            this.durutionValueLabel.TabIndex = 8;
-            this.durutionValueLabel.Text = "*value*";
-            this.durutionValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // stepValueLabel
-            // 
-            this.stepValueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.stepValueLabel.Location = new System.Drawing.Point(431, 112);
-            this.stepValueLabel.Name = "stepValueLabel";
-            this.stepValueLabel.Size = new System.Drawing.Size(87, 55);
-            this.stepValueLabel.TabIndex = 7;
-            this.stepValueLabel.Text = "*value*";
-            this.stepValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // offsetValueLabel
-            // 
-            this.offsetValueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.offsetValueLabel.Location = new System.Drawing.Point(431, 34);
-            this.offsetValueLabel.Name = "offsetValueLabel";
-            this.offsetValueLabel.Size = new System.Drawing.Size(87, 55);
-            this.offsetValueLabel.TabIndex = 6;
-            this.offsetValueLabel.Text = "*value*";
-            this.offsetValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // durutionTrackBar
-            // 
-            this.durutionTrackBar.Location = new System.Drawing.Point(179, 191);
-            this.durutionTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.durutionTrackBar.Name = "durutionTrackBar";
-            this.durutionTrackBar.Size = new System.Drawing.Size(243, 56);
-            this.durutionTrackBar.TabIndex = 5;
-            // 
-            // durutionConstantLabel
-            // 
-            this.durutionConstantLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.durutionConstantLabel.Location = new System.Drawing.Point(27, 191);
-            this.durutionConstantLabel.Name = "durutionConstantLabel";
-            this.durutionConstantLabel.Size = new System.Drawing.Size(134, 56);
-            this.durutionConstantLabel.TabIndex = 4;
-            this.durutionConstantLabel.Text = "Durution:";
-            this.durutionConstantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // stepTrackBar
-            // 
-            this.stepTrackBar.Location = new System.Drawing.Point(179, 111);
-            this.stepTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.stepTrackBar.Name = "stepTrackBar";
-            this.stepTrackBar.Size = new System.Drawing.Size(243, 56);
-            this.stepTrackBar.TabIndex = 3;
-            // 
-            // offsetTrackBar
-            // 
-            this.offsetTrackBar.Location = new System.Drawing.Point(179, 34);
-            this.offsetTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.offsetTrackBar.Name = "offsetTrackBar";
-            this.offsetTrackBar.Size = new System.Drawing.Size(243, 56);
-            this.offsetTrackBar.TabIndex = 2;
-            // 
-            // stepConstantLabel
-            // 
-            this.stepConstantLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.stepConstantLabel.Location = new System.Drawing.Point(27, 111);
-            this.stepConstantLabel.Name = "stepConstantLabel";
-            this.stepConstantLabel.Size = new System.Drawing.Size(134, 56);
-            this.stepConstantLabel.TabIndex = 1;
-            this.stepConstantLabel.Text = "Step:";
-            this.stepConstantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // offsetConstantLabel
-            // 
-            this.offsetConstantLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.offsetConstantLabel.Location = new System.Drawing.Point(27, 34);
-            this.offsetConstantLabel.Name = "offsetConstantLabel";
-            this.offsetConstantLabel.Size = new System.Drawing.Size(134, 56);
-            this.offsetConstantLabel.TabIndex = 0;
-            this.offsetConstantLabel.Text = "Offset:";
-            this.offsetConstantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // filePropertiesGroupBox
-            // 
-            this.filePropertiesGroupBox.Controls.Add(this.chooseOutputDirectoryButton);
-            this.filePropertiesGroupBox.Controls.Add(this.chooseFilmButton);
-            this.filePropertiesGroupBox.Controls.Add(this.imagesDirectoryPanel);
-            this.filePropertiesGroupBox.Controls.Add(this.filmPathPanel);
-            this.filePropertiesGroupBox.Location = new System.Drawing.Point(5, 6);
-            this.filePropertiesGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filePropertiesGroupBox.Name = "filePropertiesGroupBox";
-            this.filePropertiesGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filePropertiesGroupBox.Size = new System.Drawing.Size(565, 306);
-            this.filePropertiesGroupBox.TabIndex = 0;
-            this.filePropertiesGroupBox.TabStop = false;
-            this.filePropertiesGroupBox.Text = "File properties";
-            // 
-            // chooseOutputDirectoryButton
-            // 
-            this.chooseOutputDirectoryButton.Location = new System.Drawing.Point(5, 172);
-            this.chooseOutputDirectoryButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chooseOutputDirectoryButton.Name = "chooseOutputDirectoryButton";
-            this.chooseOutputDirectoryButton.Size = new System.Drawing.Size(128, 46);
-            this.chooseOutputDirectoryButton.TabIndex = 6;
-            this.chooseOutputDirectoryButton.Text = "Choose output directory";
-            this.chooseOutputDirectoryButton.UseVisualStyleBackColor = true;
-            this.chooseOutputDirectoryButton.Click += new System.EventHandler(this.chooseOutputDirectoryButton_Click);
-            // 
-            // chooseFilmButton
-            // 
-            this.chooseFilmButton.Location = new System.Drawing.Point(5, 38);
-            this.chooseFilmButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chooseFilmButton.Name = "chooseFilmButton";
-            this.chooseFilmButton.Size = new System.Drawing.Size(127, 46);
-            this.chooseFilmButton.TabIndex = 5;
-            this.chooseFilmButton.Text = "Choose film";
-            this.chooseFilmButton.UseVisualStyleBackColor = true;
-            this.chooseFilmButton.Click += new System.EventHandler(this.ChooseFilmButton_Click);
-            // 
-            // imagesDirectoryPanel
-            // 
-            this.imagesDirectoryPanel.Controls.Add(this.outputDirectoryConstantLabel);
-            this.imagesDirectoryPanel.Controls.Add(this.outputDirectoryStateLabel);
-            this.imagesDirectoryPanel.Controls.Add(this.outputDirectoryInfoLabel);
-            this.imagesDirectoryPanel.Location = new System.Drawing.Point(5, 222);
-            this.imagesDirectoryPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.imagesDirectoryPanel.Name = "imagesDirectoryPanel";
-            this.imagesDirectoryPanel.Size = new System.Drawing.Size(555, 60);
-            this.imagesDirectoryPanel.TabIndex = 4;
-            // 
-            // outputDirectoryConstantLabel
-            // 
-            this.outputDirectoryConstantLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.outputDirectoryConstantLabel.Location = new System.Drawing.Point(0, 0);
-            this.outputDirectoryConstantLabel.Name = "outputDirectoryConstantLabel";
-            this.outputDirectoryConstantLabel.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.outputDirectoryConstantLabel.Size = new System.Drawing.Size(127, 23);
-            this.outputDirectoryConstantLabel.TabIndex = 0;
-            this.outputDirectoryConstantLabel.Text = "Output directory:";
-            this.outputDirectoryConstantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // outputDirectoryStateLabel
-            // 
-            this.outputDirectoryStateLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.outputDirectoryStateLabel.Location = new System.Drawing.Point(133, 0);
-            this.outputDirectoryStateLabel.Name = "outputDirectoryStateLabel";
-            this.outputDirectoryStateLabel.Size = new System.Drawing.Size(417, 23);
-            this.outputDirectoryStateLabel.TabIndex = 2;
-            this.outputDirectoryStateLabel.Text = "*status*";
-            this.outputDirectoryStateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // outputDirectoryInfoLabel
-            // 
-            this.outputDirectoryInfoLabel.BackColor = System.Drawing.Color.Transparent;
-            this.outputDirectoryInfoLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.outputDirectoryInfoLabel.Location = new System.Drawing.Point(0, 32);
-            this.outputDirectoryInfoLabel.Name = "outputDirectoryInfoLabel";
-            this.outputDirectoryInfoLabel.Size = new System.Drawing.Size(555, 23);
-            this.outputDirectoryInfoLabel.TabIndex = 1;
-            this.outputDirectoryInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // filmPathPanel
-            // 
-            this.filmPathPanel.Controls.Add(this.filmPathConstantLabel);
-            this.filmPathPanel.Controls.Add(this.filmPathStatusLabel);
-            this.filmPathPanel.Controls.Add(this.filmPathInfoLabel);
-            this.filmPathPanel.Location = new System.Drawing.Point(5, 87);
-            this.filmPathPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filmPathPanel.Name = "filmPathPanel";
-            this.filmPathPanel.Size = new System.Drawing.Size(555, 62);
-            this.filmPathPanel.TabIndex = 3;
-            // 
-            // filmPathConstantLabel
-            // 
-            this.filmPathConstantLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.filmPathConstantLabel.Location = new System.Drawing.Point(0, 0);
-            this.filmPathConstantLabel.Name = "filmPathConstantLabel";
-            this.filmPathConstantLabel.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.filmPathConstantLabel.Size = new System.Drawing.Size(79, 23);
-            this.filmPathConstantLabel.TabIndex = 0;
-            this.filmPathConstantLabel.Text = "Film path:";
-            this.filmPathConstantLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // filmPathStatusLabel
-            // 
-            this.filmPathStatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.filmPathStatusLabel.Location = new System.Drawing.Point(85, 0);
-            this.filmPathStatusLabel.Name = "filmPathStatusLabel";
-            this.filmPathStatusLabel.Size = new System.Drawing.Size(466, 23);
-            this.filmPathStatusLabel.TabIndex = 2;
-            this.filmPathStatusLabel.Text = "*status*";
-            this.filmPathStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // filmPathInfoLabel
-            // 
-            this.filmPathInfoLabel.BackColor = System.Drawing.Color.Transparent;
-            this.filmPathInfoLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.filmPathInfoLabel.Location = new System.Drawing.Point(0, 32);
-            this.filmPathInfoLabel.Name = "filmPathInfoLabel";
-            this.filmPathInfoLabel.Size = new System.Drawing.Size(555, 23);
-            this.filmPathInfoLabel.TabIndex = 1;
-            this.filmPathInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // imgDatasetCreaterTabPage
-            // 
-            this.imgDatasetCreaterTabPage.Controls.Add(this.size_label);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.output_file_label);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.source_file_label);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.textBox1);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.label3);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.label2);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.label1);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.selected_type_label);
-            this.imgDatasetCreaterTabPage.Controls.Add(this.pictureBox1);
-            this.imgDatasetCreaterTabPage.Location = new System.Drawing.Point(4, 25);
-            this.imgDatasetCreaterTabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.imgDatasetCreaterTabPage.Name = "imgDatasetCreaterTabPage";
-            this.imgDatasetCreaterTabPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.imgDatasetCreaterTabPage.Size = new System.Drawing.Size(1883, 994);
-            this.imgDatasetCreaterTabPage.TabIndex = 1;
-            this.imgDatasetCreaterTabPage.Text = "Image Dataset Creator";
-            this.imgDatasetCreaterTabPage.UseVisualStyleBackColor = true;
-            // 
-            // size_label
-            // 
-            this.size_label.AutoSize = true;
-            this.size_label.Location = new System.Drawing.Point(62, 146);
-            this.size_label.Name = "size_label";
-            this.size_label.Size = new System.Drawing.Size(0, 17);
-            this.size_label.TabIndex = 8;
-            // 
-            // output_file_label
-            // 
-            this.output_file_label.AutoSize = true;
-            this.output_file_label.Location = new System.Drawing.Point(138, 111);
-            this.output_file_label.Name = "output_file_label";
-            this.output_file_label.Size = new System.Drawing.Size(0, 17);
-            this.output_file_label.TabIndex = 7;
-            // 
-            // source_file_label
-            // 
-            this.source_file_label.AutoSize = true;
-            this.source_file_label.Location = new System.Drawing.Point(54, 80);
-            this.source_file_label.Name = "source_file_label";
-            this.source_file_label.Size = new System.Drawing.Size(0, 17);
-            this.source_file_label.TabIndex = 6;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(5, 183);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(333, 331);
-            this.textBox1.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 146);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 17);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "size:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 111);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "output_filename:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 80);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 17);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "src:";
-            // 
-            // selected_type_label
-            // 
-            this.selected_type_label.AutoSize = true;
-            this.selected_type_label.BackColor = System.Drawing.Color.Yellow;
-            this.selected_type_label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selected_type_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.selected_type_label.Location = new System.Drawing.Point(57, 6);
-            this.selected_type_label.Name = "selected_type_label";
-            this.selected_type_label.Size = new System.Drawing.Size(44, 48);
-            this.selected_type_label.TabIndex = 1;
-            this.selected_type_label.Text = "1";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(345, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1920, 1080);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            // classLabel
+            // 
+            this.classLabel.AutoSize = true;
+            this.classLabel.BackColor = System.Drawing.Color.Yellow;
+            this.classLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.classLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.classLabel.Location = new System.Drawing.Point(24, 20);
+            this.classLabel.Name = "classLabel";
+            this.classLabel.Size = new System.Drawing.Size(44, 48);
+            this.classLabel.TabIndex = 1;
+            this.classLabel.Text = "1";
+            // 
+            // sourceConstantLabel
+            // 
+            this.sourceConstantLabel.AutoSize = true;
+            this.sourceConstantLabel.Location = new System.Drawing.Point(21, 97);
+            this.sourceConstantLabel.Name = "sourceConstantLabel";
+            this.sourceConstantLabel.Size = new System.Drawing.Size(57, 17);
+            this.sourceConstantLabel.TabIndex = 2;
+            this.sourceConstantLabel.Text = "Source:";
+            // 
+            // outputConstantLabel
+            // 
+            this.outputConstantLabel.AutoSize = true;
+            this.outputConstantLabel.Location = new System.Drawing.Point(21, 130);
+            this.outputConstantLabel.Name = "outputConstantLabel";
+            this.outputConstantLabel.Size = new System.Drawing.Size(55, 17);
+            this.outputConstantLabel.TabIndex = 3;
+            this.outputConstantLabel.Text = "Output:";
+            // 
+            // sizeConstantLabel
+            // 
+            this.sizeConstantLabel.AutoSize = true;
+            this.sizeConstantLabel.Location = new System.Drawing.Point(21, 162);
+            this.sizeConstantLabel.Name = "sizeConstantLabel";
+            this.sizeConstantLabel.Size = new System.Drawing.Size(39, 17);
+            this.sizeConstantLabel.TabIndex = 4;
+            this.sizeConstantLabel.Text = "Size:";
+            // 
+            // textBox
+            // 
+            this.textBox.Location = new System.Drawing.Point(13, 205);
+            this.textBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox.Multiline = true;
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(333, 331);
+            this.textBox.TabIndex = 5;
+            // 
+            // sourceFileLabel
+            // 
+            this.sourceFileLabel.AutoSize = true;
+            this.sourceFileLabel.Location = new System.Drawing.Point(84, 97);
+            this.sourceFileLabel.Name = "sourceFileLabel";
+            this.sourceFileLabel.Size = new System.Drawing.Size(13, 17);
+            this.sourceFileLabel.TabIndex = 6;
+            this.sourceFileLabel.Text = "-";
+            // 
+            // outputFileLabel
+            // 
+            this.outputFileLabel.AutoSize = true;
+            this.outputFileLabel.Location = new System.Drawing.Point(84, 130);
+            this.outputFileLabel.Name = "outputFileLabel";
+            this.outputFileLabel.Size = new System.Drawing.Size(13, 17);
+            this.outputFileLabel.TabIndex = 7;
+            this.outputFileLabel.Text = "-";
+            // 
+            // sizeLabel
+            // 
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Location = new System.Drawing.Point(84, 162);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(13, 17);
+            this.sizeLabel.TabIndex = 8;
+            this.sizeLabel.Text = "-";
+            // 
+            // infoPanel
+            // 
+            this.infoPanel.Controls.Add(this.sourceFileLabel);
+            this.infoPanel.Controls.Add(this.sizeLabel);
+            this.infoPanel.Controls.Add(this.classLabel);
+            this.infoPanel.Controls.Add(this.outputFileLabel);
+            this.infoPanel.Controls.Add(this.sourceConstantLabel);
+            this.infoPanel.Controls.Add(this.outputConstantLabel);
+            this.infoPanel.Controls.Add(this.textBox);
+            this.infoPanel.Controls.Add(this.sizeConstantLabel);
+            this.infoPanel.Location = new System.Drawing.Point(13, 13);
+            this.infoPanel.Name = "infoPanel";
+            this.infoPanel.Size = new System.Drawing.Size(362, 601);
+            this.infoPanel.TabIndex = 1;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Location = new System.Drawing.Point(381, 13);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(798, 602);
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1902, 1033);
-            this.Controls.Add(this.mainTabControl);
+            this.ClientSize = new System.Drawing.Size(1191, 626);
+            this.Controls.Add(this.pictureBox);
+            this.Controls.Add(this.infoPanel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Image Dataset Builder v0.1";
-            this.mainTabControl.ResumeLayout(false);
-            this.filmToImageTabPage.ResumeLayout(false);
-            this.convertionStatusGroupBox.ResumeLayout(false);
-            this.convertionAttributesGroupBox.ResumeLayout(false);
-            this.convertionAttributesGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.durutionTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stepTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.offsetTrackBar)).EndInit();
-            this.filePropertiesGroupBox.ResumeLayout(false);
-            this.imagesDirectoryPanel.ResumeLayout(false);
-            this.filmPathPanel.ResumeLayout(false);
-            this.imgDatasetCreaterTabPage.ResumeLayout(false);
-            this.imgDatasetCreaterTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mainForm_KeyUp);
+            this.infoPanel.ResumeLayout(false);
+            this.infoPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage filmToImageTabPage;
-        private System.Windows.Forms.TabPage imgDatasetCreaterTabPage;
-        private System.Windows.Forms.GroupBox filePropertiesGroupBox;
-        private System.Windows.Forms.Label filmPathConstantLabel;
-        private System.Windows.Forms.Label filmPathInfoLabel;
-        private System.Windows.Forms.Label filmPathStatusLabel;
-        private System.Windows.Forms.GroupBox convertionStatusGroupBox;
-        private System.Windows.Forms.GroupBox convertionAttributesGroupBox;
-        private System.Windows.Forms.Panel filmPathPanel;
-        private System.Windows.Forms.Panel imagesDirectoryPanel;
-        private System.Windows.Forms.Label outputDirectoryConstantLabel;
-        private System.Windows.Forms.Label outputDirectoryStateLabel;
-        private System.Windows.Forms.Label outputDirectoryInfoLabel;
-        private System.Windows.Forms.Label offsetConstantLabel;
-        private System.Windows.Forms.Label stepConstantLabel;
-        private System.Windows.Forms.TrackBar durutionTrackBar;
-        private System.Windows.Forms.Label durutionConstantLabel;
-        private System.Windows.Forms.TrackBar stepTrackBar;
-        private System.Windows.Forms.TrackBar offsetTrackBar;
-        private System.Windows.Forms.Label offsetValueLabel;
-        private System.Windows.Forms.Label durutionValueLabel;
-        private System.Windows.Forms.Label stepValueLabel;
-        private System.Windows.Forms.Label conversionStatusLabel;
-        private System.Windows.Forms.Button conversionButton;
-        private System.Windows.Forms.ProgressBar conversionProgressBar;
-        private System.Windows.Forms.Button chooseOutputDirectoryButton;
-        private System.Windows.Forms.Button chooseFilmButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label selected_type_label;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label size_label;
-        private System.Windows.Forms.Label output_file_label;
-        private System.Windows.Forms.Label source_file_label;
+        private System.Windows.Forms.Label sizeLabel;
+        private System.Windows.Forms.Label outputFileLabel;
+        private System.Windows.Forms.Label sourceFileLabel;
+        private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.Label sizeConstantLabel;
+        private System.Windows.Forms.Label outputConstantLabel;
+        private System.Windows.Forms.Label sourceConstantLabel;
+        private System.Windows.Forms.Label classLabel;
+        private System.Windows.Forms.Panel infoPanel;
+        private System.Windows.Forms.PictureBox pictureBox;
     }
 }
 
