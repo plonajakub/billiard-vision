@@ -41,15 +41,19 @@ namespace ImageDatasetBuilder
 
         public class ImageExample
         {
+            public override string ToString()
+            {
+                return "(" + XMin + ", " + YMin + ", " + XMax + ", " + YMax + ", " + Class + ")";
+            }
             public string Filename { get; set; }
             public string ImageFormat { get; set; }
             public double Height { get; set; }
             public double Width { get; set; }
             public string Class { get; set; }
-            public double XMin { get; set; }
-            public double XMax { get; set; }
-            public double YMin { get; set; }
-            public double YMax { get; set; }
+            public int XMin { get; set; }
+            public int XMax { get; set; }
+            public int YMin { get; set; }
+            public int YMax { get; set; }
             
         }
 
@@ -95,5 +99,7 @@ namespace ImageDatasetBuilder
             imageExamples.AddRange(imageExamplesToAppend);
             this.WriteCsv(filePath, imageExamples);
         }
+
+
     }
 }

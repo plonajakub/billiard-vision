@@ -26,22 +26,23 @@ namespace ImageDatasetBuilder
 
             ObjectTypeMapping = new Dictionary<ObjectType, string>
             {
-                {ObjectType.B1, "1"},
-                {ObjectType.B2, "2"},
-                {ObjectType.B3, "3"},
-                {ObjectType.B4, "4"},
-                {ObjectType.B5, "5"},
-                {ObjectType.B6, "6"},
-                {ObjectType.B7, "7"},
-                {ObjectType.B8, "8"},
-                {ObjectType.B9, "9"},
-                {ObjectType.B10, "10"},
-                {ObjectType.B11, "11"},
-                {ObjectType.B12, "12"},
-                {ObjectType.B13, "13"},
-                {ObjectType.B14, "14"},
-                {ObjectType.B15, "15"},
-                {ObjectType.Hole, "H"}
+                {ObjectType.B1, "b1"},
+                {ObjectType.B2, "b2"},
+                {ObjectType.B3, "b3"},
+                {ObjectType.B4, "b4"},
+                {ObjectType.B5, "b5"},
+                {ObjectType.B6, "b6"},
+                {ObjectType.B7, "b7"},
+                {ObjectType.B8, "b8"},
+                {ObjectType.B9, "b9"},
+                {ObjectType.B10, "b10"},
+                {ObjectType.B11, "b11"},
+                {ObjectType.B12, "b12"},
+                {ObjectType.B13, "b13"},
+                {ObjectType.B14, "b14"},
+                {ObjectType.B15, "b15"},
+                {ObjectType.Hole, "h"},
+                {ObjectType.White, "bw"}
             };
         }
 
@@ -62,7 +63,8 @@ namespace ImageDatasetBuilder
             B13,
             B14,
             B15,
-            Hole 
+            Hole,
+            White
         }
 
         public Dictionary<ObjectType, string> ObjectTypeMapping{ get; private set;}

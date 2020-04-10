@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CsvService.cs" />
     <Compile Include="HelperStructures.cs" />
+    <Compile Include="IndexGenerator.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="unprocessed\bilard_test.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
