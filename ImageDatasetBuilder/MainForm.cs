@@ -22,7 +22,7 @@ namespace ImageDatasetBuilder
         private const string PICTURES_FORMAT = ".png";
         private const string FILES_FORMAT = "*" + PICTURES_FORMAT;
         private const string PROCESSED_FILES_PATH = ".\\processed\\";
-        private const string UNPROCESSED_FILES_PATH = ".\\unprocessed\\";
+        private const string UNPROCESSED_FILES_PATH = ".\\";
         private Type selectedType = Type.B1;
         List<Frame> selected_areas = new List<Frame>();
         Frame current_frame = new Frame();
@@ -180,6 +180,11 @@ namespace ImageDatasetBuilder
 
         private void nextPicture()
         {
+          
+            string processed_picture = "";
+            if (image != null)
+                processed_picture = images_enumerator.Current.ToString();
+
             if (selected_areas.Count == 0)
             {
                 loadNextImage();
@@ -213,18 +218,26 @@ namespace ImageDatasetBuilder
             }
 
             
-            File.Move(UNPROCESSED_FILES_PATH + images_enumerator.Current.ToString(), PROCESSED_FILES_PATH + output_file_name);
+            File.Move(UNPROCESSED_FILES_PATH + processed_picture, PROCESSED_FILES_PATH + output_file_name);
             updateUI();
         }
 
         private void loadNextImage()
         {
-            if(images_enumerator.MoveNext())
+
+            if (pictureBox1.Image != null)
+            {
+                image.Dispose();
+                pictureBox1.Image.Dispose();
+            }
+            if (images_enumerator.MoveNext())
             {
                 image = Image.FromFile(images_enumerator.Current.ToString());
             }
             selected_areas.Clear();
-            pictureBox1.Image.Dispose();
+
+
+            
             pictureBox1.Image = image; 
         }
 
