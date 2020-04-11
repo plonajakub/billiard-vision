@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 namespace ImageDatasetBuilder
 {
-    public class HelperStructures
+    public static class HelperStructures
     {
         public enum InputStatus
         {
@@ -13,40 +12,14 @@ namespace ImageDatasetBuilder
             Empty
         }
 
-        public Dictionary<InputStatus, String> InputStatusMapping { get; private set; }
-
-        public HelperStructures()
+        public static Dictionary<InputStatus, string> InputStatusMapping { get; } = new Dictionary<InputStatus, string>
         {
-            InputStatusMapping = new Dictionary<InputStatus, string>
-            {
-                { InputStatus.Valid, "Input OK" },
-                { InputStatus.Invalid, "Input INCORRECT" },
-                { InputStatus.Empty, "Enter information to continue" }
-            };
+            { InputStatus.Valid, "Input OK" },
+            { InputStatus.Invalid, "Input INCORRECT" },
+            { InputStatus.Empty, "Enter information to continue" }
+        };
 
-            ObjectTypeMapping = new Dictionary<ObjectType, string>
-            {
-                {ObjectType.B1, "b1"},
-                {ObjectType.B2, "b2"},
-                {ObjectType.B3, "b3"},
-                {ObjectType.B4, "b4"},
-                {ObjectType.B5, "b5"},
-                {ObjectType.B6, "b6"},
-                {ObjectType.B7, "b7"},
-                {ObjectType.B8, "b8"},
-                {ObjectType.B9, "b9"},
-                {ObjectType.B10, "b10"},
-                {ObjectType.B11, "b11"},
-                {ObjectType.B12, "b12"},
-                {ObjectType.B13, "b13"},
-                {ObjectType.B14, "b14"},
-                {ObjectType.B15, "b15"},
-                {ObjectType.Hole, "h"},
-                {ObjectType.White, "bw"}
-            };
-        }
-
-        public enum ObjectType
+        public enum ObjectClass
         {
             B1,
             B2,
@@ -63,11 +36,41 @@ namespace ImageDatasetBuilder
             B13,
             B14,
             B15,
-            Hole,
-            White
+            BWhite,
+            Hole
         }
 
-        public Dictionary<ObjectType, string> ObjectTypeMapping{ get; private set;}
+        public static Dictionary<ObjectClass, string> ObjectClassMapping { get; } = new Dictionary<ObjectClass, string>
+        {
+            {ObjectClass.B1, "b1"},
+            {ObjectClass.B2, "b2"},
+            {ObjectClass.B3, "b3"},
+            {ObjectClass.B4, "b4"},
+            {ObjectClass.B5, "b5"},
+            {ObjectClass.B6, "b6"},
+            {ObjectClass.B7, "b7"},
+            {ObjectClass.B8, "b8"},
+            {ObjectClass.B9, "b9"},
+            {ObjectClass.B10, "b10"},
+            {ObjectClass.B11, "b11"},
+            {ObjectClass.B12, "b12"},
+            {ObjectClass.B13, "b13"},
+            {ObjectClass.B14, "b14"},
+            {ObjectClass.B15, "b15"},
+            {ObjectClass.BWhite, "bw"},
+            {ObjectClass.Hole, "h"}
+        };
 
+        public enum ImageFormat
+        {
+            PNG,
+            JPEG
+        }
+
+        public static Dictionary<ImageFormat, string> ImageFormatMapping { get; } = new Dictionary<ImageFormat, string>
+        {
+            {ImageFormat.PNG, "png"},
+            {ImageFormat.JPEG, "jpeg"}
+        };
     }
 }

@@ -6,88 +6,90 @@ using System.Threading.Tasks;
 
 namespace ImageDatasetBuilder
 {
-    class IndexGenerator
+    public class IndexGenerator
     {
-        static int current_b1;
-        static int current_b2;
-        static int current_b3;
-        static int current_b4;
-        static int current_b5;
-        static int current_b6;
-        static int current_b7;
-        static int current_b8;
-        static int current_b9;
-        static int current_b10;
-        static int current_b11;
-        static int current_b12;
-        static int current_b13;
-        static int current_b14;
-        static int current_b15;
-        static int current_hole; 
-        static int current_white;
-        static int current_multi;
+        private static int _currentB1 = 0;
+        private static int _currentB2 = 0;
+        private static int _currentB3 = 0;
+        private static int _currentB4 = 0;
+        private static int _currentB5 = 0;
+        private static int _currentB6 = 0;
+        private static int _currentB7 = 0;
+        private static int _currentB8 = 0;
+        private static int _currentB9 = 0;
+        private static int _currentB10 = 0;
+        private static int _currentB11 = 0;
+        private static int _currentB12 = 0;
+        private static int _currentB13 = 0;
+        private static int _currentB14 = 0;
+        private static int _currentB15 = 0;
+        private static int _currentBWhite = 0;
+        private static int _currentHole = 0;
+        private static int _currentMulti = 0;
 
-        public int next_index(string object_class)
+        public static int NextIndex(HelperStructures.ObjectClass objectClass)
         {
-            switch (object_class)
-                {
-                case CsvService.SClass.Bill1:
-                    return ++current_b1;
+            switch (objectClass)
+            {
+                case HelperStructures.ObjectClass.B1:
+                    return ++_currentB1;
 
-                case CsvService.SClass.Bill2:
-                    return ++current_b2;
+                case HelperStructures.ObjectClass.B2:
+                    return ++_currentB2;
 
-                case CsvService.SClass.Bill3:
-                    return ++current_b3;
+                case HelperStructures.ObjectClass.B3:
+                    return ++_currentB3;
 
-                case CsvService.SClass.Bill4:
-                    return ++current_b4;
+                case HelperStructures.ObjectClass.B4:
+                    return ++_currentB4;
 
-                case CsvService.SClass.Bill5:
-                    return ++current_b5;
+                case HelperStructures.ObjectClass.B5:
+                    return ++_currentB5;
 
-                case CsvService.SClass.Bill6:
-                    return ++current_b6;
+                case HelperStructures.ObjectClass.B6:
+                    return ++_currentB6;
 
-                case CsvService.SClass.Bill7:
-                    return ++current_b7;
+                case HelperStructures.ObjectClass.B7:
+                    return ++_currentB7;
 
-                case CsvService.SClass.Bill8:
-                    return ++current_b8;
+                case HelperStructures.ObjectClass.B8:
+                    return ++_currentB8;
 
-                case CsvService.SClass.Bill9:
-                    return ++current_b9;
+                case HelperStructures.ObjectClass.B9:
+                    return ++_currentB9;
 
-                case CsvService.SClass.Bill10:
-                    return ++current_b10;
+                case HelperStructures.ObjectClass.B10:
+                    return ++_currentB10;
 
-                case CsvService.SClass.Bill11:
-                    return ++current_b11;
+                case HelperStructures.ObjectClass.B11:
+                    return ++_currentB11;
 
-                case CsvService.SClass.Bill12:
-                    return ++current_b12;
+                case HelperStructures.ObjectClass.B12:
+                    return ++_currentB12;
 
-                case CsvService.SClass.Bill13:
-                    return ++current_b13;
+                case HelperStructures.ObjectClass.B13:
+                    return ++_currentB13;
 
-                case CsvService.SClass.Bill14:
-                    return ++current_b14;
+                case HelperStructures.ObjectClass.B14:
+                    return ++_currentB14;
 
-                case CsvService.SClass.Bill15:
-                    return ++current_b15;
+                case HelperStructures.ObjectClass.B15:
+                    return ++_currentB15;
 
-                case CsvService.SClass.BillWhite:
-                    return ++current_white;
+                case HelperStructures.ObjectClass.BWhite:
+                    return ++_currentBWhite;
 
-                case CsvService.SClass.Hole:
-                    return ++current_hole;
-
-                case "multi":
-                    return ++current_multi;
+                case HelperStructures.ObjectClass.Hole:
+                    return ++_currentHole;
 
                 default:
                     return -1;
             }
+        }
+
+        public static int NextMultiIndex()
+        {
+            return ++_currentMulti;
         }
     }
 }

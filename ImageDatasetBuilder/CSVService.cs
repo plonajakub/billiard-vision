@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -12,39 +9,8 @@ namespace ImageDatasetBuilder
 {
     public class CsvService
     {
-        public static class SImageFormat
-        {
-            public const string PNG = "png";
-            public const string JPEG = "jpeg";
-        }
-
-        public static class SClass
-        {
-            public const string Bill1 = "b1";
-            public const string Bill2 = "b2";
-            public const string Bill3 = "b3";
-            public const string Bill4 = "b4";
-            public const string Bill5 = "b5";
-            public const string Bill6 = "b6";
-            public const string Bill7 = "b7";
-            public const string Bill8 = "b8";
-            public const string Bill9 = "b9";
-            public const string Bill10 = "b10";
-            public const string Bill11 = "b11";
-            public const string Bill12 = "b12";
-            public const string Bill13 = "b13";
-            public const string Bill14 = "b14";
-            public const string Bill15 = "b15";
-            public const string BillWhite = "bw";
-            public const string Hole = "h";
-        }
-
         public class ImageExample
         {
-            public override string ToString()
-            {
-                return "(" + XMin + ", " + YMin + ", " + XMax + ", " + YMax + ", " + Class + ")";
-            }
             public string Filename { get; set; }
             public string ImageFormat { get; set; }
             public double Height { get; set; }
@@ -55,6 +21,10 @@ namespace ImageDatasetBuilder
             public int YMin { get; set; }
             public int YMax { get; set; }
             
+            public override string ToString()
+            {
+                return "(" + XMin + ", " + YMin + ", " + XMax + ", " + YMax + ", " + Class + ")";
+            }
         }
 
         public class ImageExampleMap : ClassMap<ImageExample>
@@ -99,7 +69,5 @@ namespace ImageDatasetBuilder
             imageExamples.AddRange(imageExamplesToAppend);
             this.WriteCsv(filePath, imageExamples);
         }
-
-
     }
 }
