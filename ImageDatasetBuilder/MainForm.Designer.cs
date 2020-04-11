@@ -83,10 +83,12 @@
             // 
             // textBox
             // 
+            this.textBox.Enabled = false;
             this.textBox.Location = new System.Drawing.Point(13, 205);
             this.textBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
+            this.textBox.ReadOnly = true;
             this.textBox.Size = new System.Drawing.Size(333, 331);
             this.textBox.TabIndex = 5;
             // 
