@@ -1,95 +1,492 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Security;
+
 
 namespace ImageDatasetBuilder
 {
     public class IndexGenerator
     {
-        private static int _currentB1 = 0;
-        private static int _currentB2 = 0;
-        private static int _currentB3 = 0;
-        private static int _currentB4 = 0;
-        private static int _currentB5 = 0;
-        private static int _currentB6 = 0;
-        private static int _currentB7 = 0;
-        private static int _currentB8 = 0;
-        private static int _currentB9 = 0;
-        private static int _currentB10 = 0;
-        private static int _currentB11 = 0;
-        private static int _currentB12 = 0;
-        private static int _currentB13 = 0;
-        private static int _currentB14 = 0;
-        private static int _currentB15 = 0;
-        private static int _currentBWhite = 0;
-        private static int _currentHole = 0;
-        private static int _currentMulti = 0;
-
-        public int NextIndex(HelperStructures.ObjectClass objectClass)
+        public IndexGenerator(string datasetPath = @"images\processed\dataset")
         {
-            switch (objectClass)
+            _datasetPath = datasetPath;
+        }
+        private readonly string _datasetPath;
+
+        public int NextB1Index()
+        {
+
+            try
             {
-                case HelperStructures.ObjectClass.B1:
-                    return ++_currentB1;
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B1 + "*");
 
-                case HelperStructures.ObjectClass.B2:
-                    return ++_currentB2;
-
-                case HelperStructures.ObjectClass.B3:
-                    return ++_currentB3;
-
-                case HelperStructures.ObjectClass.B4:
-                    return ++_currentB4;
-
-                case HelperStructures.ObjectClass.B5:
-                    return ++_currentB5;
-
-                case HelperStructures.ObjectClass.B6:
-                    return ++_currentB6;
-
-                case HelperStructures.ObjectClass.B7:
-                    return ++_currentB7;
-
-                case HelperStructures.ObjectClass.B8:
-                    return ++_currentB8;
-
-                case HelperStructures.ObjectClass.B9:
-                    return ++_currentB9;
-
-                case HelperStructures.ObjectClass.B10:
-                    return ++_currentB10;
-
-                case HelperStructures.ObjectClass.B11:
-                    return ++_currentB11;
-
-                case HelperStructures.ObjectClass.B12:
-                    return ++_currentB12;
-
-                case HelperStructures.ObjectClass.B13:
-                    return ++_currentB13;
-
-                case HelperStructures.ObjectClass.B14:
-                    return ++_currentB14;
-
-                case HelperStructures.ObjectClass.B15:
-                    return ++_currentB15;
-
-                case HelperStructures.ObjectClass.BWhite:
-                    return ++_currentBWhite;
-
-                case HelperStructures.ObjectClass.Hole:
-                    return ++_currentHole;
-
-                default:
-                    return -1;
+                return MaxIndex(filesList);
             }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB2Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B2 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB3Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B3 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB4Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B4 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB5Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B5 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB6Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B6 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB7Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B7 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB8Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B8 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB9Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B9 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB10Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B10 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB11Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B11 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB12Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B12 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB13Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B13 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB14Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B14 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextB15Index()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.B15 + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+        public int NextBWhiteIndex()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.BWhite + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
+        }
+
+        public int NextHoleIndex()
+        {
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, HelperStructures.ObjectClass.Hole + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+
         }
 
         public int NextMultiIndex()
         {
-            return ++_currentMulti;
+           
+
+            try
+            {
+                var filesList = Directory.EnumerateFiles(_datasetPath, "multi" + "*");
+
+                return MaxIndex(filesList);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("[Error] Can not find dataset directory.");
+                return -1;
+            }
+            catch (SecurityException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("[Error] No permissions to see {0}", _datasetPath);
+            }
+            return -1;
+        }
+
+        private static int MaxIndex(IEnumerable<string> filesList)
+        {
+            int maxIndex = 0;
+            foreach (var file in filesList)
+            {
+                int currentIndex = 0;
+                var fileName = Path.GetFileName(file); //TODO: Validate filename
+                var parsed = Int32.TryParse(fileName.Split('_')[1], out currentIndex);
+                if (parsed)
+                {
+                    if (currentIndex > maxIndex)
+                        maxIndex = currentIndex;
+                }
+            }
+
+            return maxIndex;
         }
     }
 }
