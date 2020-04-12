@@ -27,7 +27,7 @@ namespace ImageDatasetBuilder
         private static int _currentHole = 0;
         private static int _currentMulti = 0;
 
-        public static int NextIndex(HelperStructures.ObjectClass objectClass)
+        public int NextIndex(HelperStructures.ObjectClass objectClass)
         {
             switch (objectClass)
             {
@@ -87,7 +87,7 @@ namespace ImageDatasetBuilder
             }
         }
 
-        public static int NextMultiIndex()
+        public int NextMultiIndex()
         {
             return ++_currentMulti;
         }

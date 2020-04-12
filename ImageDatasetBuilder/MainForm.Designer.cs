@@ -50,9 +50,10 @@
             this.classLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.classLabel.Location = new System.Drawing.Point(24, 20);
             this.classLabel.Name = "classLabel";
-            this.classLabel.Size = new System.Drawing.Size(44, 48);
+            this.classLabel.Size = new System.Drawing.Size(35, 48);
             this.classLabel.TabIndex = 1;
-            this.classLabel.Text = "1";
+            this.classLabel.Text = "-";
+            this.classLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // sourceConstantLabel
             // 
@@ -142,7 +143,7 @@
             this.pictureBox.Size = new System.Drawing.Size(798, 602);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
-            this.pictureBox.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 

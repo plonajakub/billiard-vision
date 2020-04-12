@@ -61,6 +61,27 @@ namespace ImageDatasetBuilder
             {ObjectClass.Hole, "h"}
         };
 
+        public static Dictionary<ObjectClass, string> ObjectClassUserFriendlyMapping { get; } = new Dictionary<ObjectClass, string>
+        {
+            {ObjectClass.B1, "1"},
+            {ObjectClass.B2, "2"},
+            {ObjectClass.B3, "3"},
+            {ObjectClass.B4, "4"},
+            {ObjectClass.B5, "5"},
+            {ObjectClass.B6, "6"},
+            {ObjectClass.B7, "7"},
+            {ObjectClass.B8, "8"},
+            {ObjectClass.B9, "9"},
+            {ObjectClass.B10, "10"},
+            {ObjectClass.B11, "11"},
+            {ObjectClass.B12, "12"},
+            {ObjectClass.B13, "13"},
+            {ObjectClass.B14, "14"},
+            {ObjectClass.B15, "15"},
+            {ObjectClass.BWhite, "White"},
+            {ObjectClass.Hole, "Hole"}
+        };
+
         public enum ImageFormat
         {
             PNG,
