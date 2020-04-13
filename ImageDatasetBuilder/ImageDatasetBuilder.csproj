@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CsvService.cs" />
     <Compile Include="HelperStructures.cs" />
+    <Compile Include="ImageExample.cs" />
     <Compile Include="IndexGenerator.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -71,7 +72,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MediaService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
