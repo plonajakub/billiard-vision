@@ -239,7 +239,7 @@ namespace ImageDatasetBuilder
             }
             else
             {
-                outputFileName = "multi_" + _indexGenerator.NextMultiIndex() + ImageExtension;
+                outputFileName = "multi_" + _indexGenerator.NextIndex() + ImageExtension;
             }
 
             return outputFileName;

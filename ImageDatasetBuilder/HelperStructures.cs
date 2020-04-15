@@ -5,6 +5,7 @@ namespace ImageDatasetBuilder
 {
     public static class HelperStructures
     {
+        public const string MultiClassFilesPrefix= "multi";
         public enum InputStatus
         {
             Valid,
