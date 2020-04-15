@@ -60,6 +60,7 @@ namespace ImageDatasetBuilder
             {
                 _unprocessedImagePathEnumerator = unprocessedImagePaths.GetEnumerator();
                 LoadNextImage();
+                UpdateUI();
             }
             else
             {
@@ -69,7 +70,7 @@ namespace ImageDatasetBuilder
             }
         }
 
-        private void LoadNextImage(bool skipCurrentImage = false)
+        private void SaveCurrentImageData(bool skipCurrentImage = false)
         {
             if (_currentImageExample != null)
             {
@@ -81,34 +82,6 @@ namespace ImageDatasetBuilder
                 }
                 _processedImageExamples.Add(_currentImageExample);
             }
-
-            if (_unprocessedImagePathEnumerator.MoveNext())
-            {
-                Debug.Assert(_unprocessedImagePathEnumerator.Current != null, "_unprocessedImagePathEnumerator.Current != null");
-                var currentImagePath = _unprocessedImagePathEnumerator.Current.ToString();
-                currentImagePictureBox.Image = Image.FromFile(currentImagePath);
-
-                _currentFrameState = ObjectFrameState.NotDefined;
-                _currentImageExample = new ImageExample
-                {
-                    Filename = currentImagePath,
-                    ImageFormat = HelperStructures.ImageFormatMapping[ImageFormat.PNG],
-                    Width = currentImagePictureBox.Image.Width,
-                    Height = currentImagePictureBox.Image.Height
-                };
-                ResetCurrentBound();
-
-                UpdateUI();
-            }
-            else
-            {
-                MessageBox.Show("All images were successfully processed.\r\n" +
-                                "Image data saved in: " + ProcessedFilesPath + "\r\n" +
-                                "CSV description file saved in: " + CsvPath + "\r\n",
-                    "All images processed!");
-                SaveCurrentImageData();
-                Close();
-            }
         }
 
         /// <summary>
@@ -118,7 +91,7 @@ namespace ImageDatasetBuilder
         /// Requires all data in _processedImageExamples to be valid.
         /// </remarks>
         /// </summary>
-        private void SaveCurrentImageData()
+        private void SaveProcessedImageData()
         {
             if (_processedImageExamples.Count == 0)
             {
@@ -172,6 +145,34 @@ namespace ImageDatasetBuilder
             _processedImageExamples.Clear();
         }
 
+        private void LoadNextImage()
+        {
+            if (_unprocessedImagePathEnumerator.MoveNext())
+            {
+                Debug.Assert(_unprocessedImagePathEnumerator.Current != null, "_unprocessedImagePathEnumerator.Current != null");
+                var currentImagePath = _unprocessedImagePathEnumerator.Current.ToString();
+                currentImagePictureBox.Image = Image.FromFile(currentImagePath);
+
+                _currentFrameState = ObjectFrameState.NotDefined;
+                _currentImageExample = new ImageExample
+                {
+                    Filename = currentImagePath,
+                    ImageFormat = HelperStructures.ImageFormatMapping[ImageFormat.PNG],
+                    Width = currentImagePictureBox.Image.Width,
+                    Height = currentImagePictureBox.Image.Height
+                };
+                ResetCurrentBound();
+            }
+            else
+            {
+                MessageBox.Show("All images were successfully processed.\r\n" +
+                                "Image data saved in: " + ProcessedFilesPath + "\r\n" +
+                                "CSV description file saved in: " + CsvPath + "\r\n",
+                    "All images processed!");
+                Close();
+            }
+        }
+
         private void UpdateCurrentBoundClass(ObjectClass newClass)
         {
             _currentImageBound = new Tuple<ObjectClass, Point, Point>(newClass, _currentImageBound.Item2, _currentImageBound.Item3);
@@ -195,65 +196,59 @@ namespace ImageDatasetBuilder
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
-            var selectedClass = ObjectClass.B1;
             switch (e.KeyCode)
             {
                 case Keys.D1:
-                    selectedClass = ObjectClass.B1;
+                    UpdateCurrentBoundClass(ObjectClass.B1);
                     break;
                 case Keys.D2:
-                    selectedClass = ObjectClass.B2;
+                    UpdateCurrentBoundClass(ObjectClass.B2);
                     break;
                 case Keys.D3:
-                    selectedClass = ObjectClass.B3;
+                    UpdateCurrentBoundClass(ObjectClass.B3);
                     break;
                 case Keys.D4:
-                    selectedClass = ObjectClass.B4;
+                    UpdateCurrentBoundClass(ObjectClass.B4);
                     break;
                 case Keys.D5:
-                    selectedClass = ObjectClass.B5;
+                    UpdateCurrentBoundClass(ObjectClass.B5);
                     break;
                 case Keys.D6:
-                    selectedClass = ObjectClass.B6;
+                    UpdateCurrentBoundClass(ObjectClass.B6);
                     break;
                 case Keys.D7:
-                    selectedClass = ObjectClass.B7;
+                    UpdateCurrentBoundClass(ObjectClass.B7);
                     break;
                 case Keys.D8:
-                    selectedClass = ObjectClass.B8;
+                    UpdateCurrentBoundClass(ObjectClass.B8);
                     break;
                 case Keys.Q:
-                    selectedClass = ObjectClass.B9;
+                    UpdateCurrentBoundClass(ObjectClass.B9);
                     break;
                 case Keys.W:
-                    selectedClass = ObjectClass.B10;
+                    UpdateCurrentBoundClass(ObjectClass.B10);
                     break;
                 case Keys.E:
-                    selectedClass = ObjectClass.B11;
+                    UpdateCurrentBoundClass(ObjectClass.B11);
                     break;
                 case Keys.R:
-                    selectedClass = ObjectClass.B12;
+                    UpdateCurrentBoundClass(ObjectClass.B12);
                     break;
                 case Keys.T:
-                    selectedClass = ObjectClass.B13;
+                    UpdateCurrentBoundClass(ObjectClass.B13);
                     break;
                 case Keys.Y:
-                    selectedClass = ObjectClass.B14;
+                    UpdateCurrentBoundClass(ObjectClass.B14);
                     break;
                 case Keys.U:
-                    selectedClass = ObjectClass.B15;
+                    UpdateCurrentBoundClass(ObjectClass.B15);
                     break;
                 case Keys.B:
-                    selectedClass = ObjectClass.BWhite;
+                    UpdateCurrentBoundClass(ObjectClass.BWhite);
                     break;
                 case Keys.H:
-                    selectedClass = ObjectClass.Hole;
+                    UpdateCurrentBoundClass(ObjectClass.Hole);
                     break;
-            }
-            UpdateCurrentBoundClass(selectedClass);
-
-            switch (e.KeyCode)
-            {
                 case Keys.C:
                     ClearPreviousBound();
                     break;
@@ -265,6 +260,7 @@ namespace ImageDatasetBuilder
                     break;
                 case Keys.Space:
                     SaveCurrentImageData();
+                    SaveProcessedImageData();
                     LoadNextImage();
                     break;
             }
