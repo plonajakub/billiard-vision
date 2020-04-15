@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,6 @@ using System.Windows.Input;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
-using ImageExample = ImageDatasetBuilder.CsvService.ImageExample;
 using ObjectClass = ImageDatasetBuilder.HelperStructures.ObjectClass;
 using ImageFormat = ImageDatasetBuilder.HelperStructures.ImageFormat;
 using InputStatus = ImageDatasetBuilder.HelperStructures.InputStatus;
@@ -31,29 +31,29 @@ namespace ImageDatasetBuilder
         private static readonly string ImageExtension = "." + HelperStructures.ImageFormatMapping[ImageFormat.PNG];
         private static readonly string ImageFormatPattern = "*" + ImageExtension;
 
-        private readonly CsvService _csvService = new CsvService();
-        private readonly IndexGenerator _indexGenerator = new IndexGenerator();
+        private readonly IndexGenerator _indexGenerator = new IndexGenerator(ProcessedFilesPath);
 
-        private readonly List<ImageExample> _definedImageObjects = new List<ImageExample>();
-        private IEnumerator _unprocessedImagePathEnumerator;
-        private ObjectClass _selectedClass;
+        private enum ObjectFrameState
+        {
+            NotDefined,
+            LuPointLocked,
+            Defined
+        }
 
-        private Image _image; // TODO remove
-        private Point _leftUpCorner;
-        private Point _rightDownCorner;
+        private ObjectFrameState _currentFrameState = ObjectFrameState.NotDefined;
+        private Tuple<ObjectClass, Point, Point> _currentImageBound = null;
+        private ImageExample _currentImageExample = null;
 
-        private bool _isLeftUpCornerDefined = false;        // TODO create some sort of predefined valid states
-        private bool _areObjectBoundingsDefined = false;    //
-        private bool _isObjectClassChoosen = false;         //
+        private IEnumerator _unprocessedImagePathEnumerator = null;
+        private readonly List<ImageExample> _processedImageExamples = new List<ImageExample>();
 
         public MainForm()
         {
             InitializeComponent();
-
-            LoadImageData();
+            InitializeProgram();
         }
 
-        private void LoadImageData()
+        private void InitializeProgram()
         {
             var unprocessedImagePaths = Directory.GetFiles(UnprocessedFilesPath, ImageFormatPattern, SearchOption.TopDirectoryOnly);
             if (unprocessedImagePaths.Length > 0)
@@ -69,121 +69,230 @@ namespace ImageDatasetBuilder
             }
         }
 
-        private void mainForm_KeyUp(object sender, KeyEventArgs e)
+        private void LoadNextImage(bool skipCurrentImage = false)
         {
+            if (_currentImageExample != null)
+            {
+                if (_currentImageExample.Bounds.Count == 0 && !skipCurrentImage)
+                {
+                    MessageBox.Show("Image has no bounds defined.\r\n" +
+                                    "Define some and try again.", "Action invalid!");
+                    return;
+                }
+                _processedImageExamples.Add(_currentImageExample);
+            }
+
+            if (_unprocessedImagePathEnumerator.MoveNext())
+            {
+                Debug.Assert(_unprocessedImagePathEnumerator.Current != null, "_unprocessedImagePathEnumerator.Current != null");
+                var currentImagePath = _unprocessedImagePathEnumerator.Current.ToString();
+                currentImagePictureBox.Image = Image.FromFile(currentImagePath);
+
+                _currentFrameState = ObjectFrameState.NotDefined;
+                _currentImageExample = new ImageExample
+                {
+                    Filename = currentImagePath,
+                    ImageFormat = HelperStructures.ImageFormatMapping[ImageFormat.PNG],
+                    Width = currentImagePictureBox.Image.Width,
+                    Height = currentImagePictureBox.Image.Height
+                };
+                ResetCurrentBound();
+
+                UpdateUI();
+            }
+            else
+            {
+                MessageBox.Show("All images were successfully processed.\r\n" +
+                                "Image data saved in: " + ProcessedFilesPath + "\r\n" +
+                                "CSV description file saved in: " + CsvPath + "\r\n",
+                    "All images processed!");
+                SaveCurrentImageData();
+                Close();
+            }
+        }
+
+        /// <summary>
+        /// Saves image data from _processedImageExamples to the CSV file
+        /// and move (with renaming) processed images.
+        /// <remarks>
+        /// Requires all data in _processedImageExamples to be valid.
+        /// </remarks>
+        /// </summary>
+        private void SaveCurrentImageData()
+        {
+            if (_processedImageExamples.Count == 0)
+            {
+                MessageBox.Show("No processed images.\r\n" +
+                                "Process at least one and try again.",
+                    "Action invalid!");
+                return;
+            }
+
+            var oldPathDict = new Dictionary<string, string>();
+            foreach (var imageExample in _processedImageExamples)
+            {
+                string newFilename;
+                switch (imageExample.Bounds.Count)
+                {
+                    case 0:
+                        throw new Exception("imageExample invalid: no bounds in the image");
+                    case 1:
+                        newFilename = HelperStructures.ObjectClassMapping[imageExample.Bounds[0].Item1] +
+                                      "_" +
+                                      _indexGenerator.NextB1Index() + // TODO Change this to parametrized version of NextIndex()
+                                      ImageExtension;
+                        break;
+                    default:
+                        newFilename = "multi" +
+                                      "_" +
+                                       _indexGenerator.NextMultiIndex() +
+                                      ImageExtension;
+                        break;
+                }
+
+                oldPathDict.Add(newFilename, imageExample.Filename);
+                imageExample.Filename = newFilename;
+            }
+
+            if (File.Exists(CsvPath))
+            {
+                CsvService.AppendToCsv(CsvPath, _processedImageExamples);
+            }
+            else
+            {
+                CsvService.WriteCsv(CsvPath, _processedImageExamples);
+            }
+
+            currentImagePictureBox.Image?.Dispose();
+            foreach (var imageExample in _processedImageExamples)
+            {
+                File.Move(oldPathDict[imageExample.Filename], ProcessedFilesPath + imageExample.Filename);
+            }
+
+            _processedImageExamples.Clear();
+        }
+
+        private void UpdateCurrentBoundClass(ObjectClass newClass)
+        {
+            _currentImageBound = new Tuple<ObjectClass, Point, Point>(newClass, _currentImageBound.Item2, _currentImageBound.Item3);
+        }
+
+        private void UpdateCurrentBoundLuPoint(Point luPoint)
+        {
+            _currentImageBound = new Tuple<ObjectClass, Point, Point>(_currentImageBound.Item1, luPoint, _currentImageBound.Item3);
+        }
+
+        private void UpdateCurrentBoundRdPoint(Point rdPoint)
+        {
+            _currentImageBound = new Tuple<ObjectClass, Point, Point>(_currentImageBound.Item1, _currentImageBound.Item2, rdPoint);
+        }
+
+        private void ResetCurrentBound()
+        {
+            _currentImageBound = new Tuple<ObjectClass, Point, Point>(ObjectClass.B1, Point.Empty, Point.Empty);
+            _currentFrameState = ObjectFrameState.NotDefined;
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            var selectedClass = ObjectClass.B1;
             switch (e.KeyCode)
             {
                 case Keys.D1:
-                    _selectedClass = ObjectClass.B1;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B1;
                     break;
                 case Keys.D2:
-                    _selectedClass = ObjectClass.B2;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B2;
                     break;
                 case Keys.D3:
-                    _selectedClass = ObjectClass.B3;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B3;
                     break;
                 case Keys.D4:
-                    _selectedClass = ObjectClass.B4;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B4;
                     break;
                 case Keys.D5:
-                    _selectedClass = ObjectClass.B5;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B5;
                     break;
                 case Keys.D6:
-                    _selectedClass = ObjectClass.B6;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B6;
                     break;
                 case Keys.D7:
-                    _selectedClass = ObjectClass.B7;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B7;
                     break;
                 case Keys.D8:
-                    _selectedClass = ObjectClass.B8;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B8;
                     break;
                 case Keys.Q:
-                    _selectedClass = ObjectClass.B9;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B9;
                     break;
                 case Keys.W:
-                    _selectedClass = ObjectClass.B10;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B10;
                     break;
                 case Keys.E:
-                    _selectedClass = ObjectClass.B11;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B11;
                     break;
                 case Keys.R:
-                    _selectedClass = ObjectClass.B12;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B12;
                     break;
                 case Keys.T:
-                    _selectedClass = ObjectClass.B13;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B13;
                     break;
                 case Keys.Y:
-                    _selectedClass = ObjectClass.B14;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B14;
                     break;
                 case Keys.U:
-                    _selectedClass = ObjectClass.B15;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.B15;
                     break;
                 case Keys.B:
-                    _selectedClass = ObjectClass.BWhite;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.BWhite;
                     break;
                 case Keys.H:
-                    _selectedClass = ObjectClass.Hole;
-                    _isObjectClassChoosen = true;
+                    selectedClass = ObjectClass.Hole;
                     break;
+            }
+            UpdateCurrentBoundClass(selectedClass);
+
+            switch (e.KeyCode)
+            {
                 case Keys.C:
-                    ClearPreviousObjectDefinition();
-                    UpdateUI();
-                    _isLeftUpCornerDefined = false;
-                    _areObjectBoundingsDefined = false;
+                    ClearPreviousBound();
+                    break;
+                case Keys.X:
+                    ResetCurrentBound();
                     break;
                 case Keys.Tab:
-                    if (!_areObjectBoundingsDefined || !_isObjectClassChoosen)
-                    {
-                        MessageBox.Show("Define class and object boundings before confirming the data.",
-                            "Information not provided!");
-                        return;
-                    }
-                    AddArea();
-                    UpdateUI();
-                    _isLeftUpCornerDefined = false;
-                    _areObjectBoundingsDefined = false;
+                    SaveCurrentBound();
                     break;
                 case Keys.Space:
                     SaveCurrentImageData();
                     LoadNextImage();
-                    UpdateUI();
                     break;
             }
-
-            classLabel.Text = HelperStructures.ObjectClassUserFriendlyMapping[_selectedClass];
+            UpdateUI();
         }
 
-        private void AddArea()
+        private void ClearPreviousBound()
         {
-            var imageObject = new ImageExample
+            if (_currentImageExample.Bounds.Count == 0)
             {
-                Height = _image.Height,
-                Width = _image.Width,
-                ImageFormat = HelperStructures.ImageFormatMapping[ImageFormat.PNG],
+                MessageBox.Show("No bounding boxes have been defined.\r\n" +
+                                "Define some and try again.", "Invalid action!");
+                return;
+            }
 
-                XMin = _leftUpCorner.X,
-                YMin = _leftUpCorner.Y,
-                XMax = _rightDownCorner.X,
-                YMax = _rightDownCorner.Y,
-                Class = HelperStructures.ObjectClassMapping[_selectedClass]
-            };
-            _definedImageObjects.Add(imageObject);
+            _currentImageExample.Bounds.RemoveAt(_currentImageExample.Bounds.Count - 1);
+        }
+
+        private void SaveCurrentBound()
+        {
+            if (_currentFrameState != ObjectFrameState.Defined)
+            {
+                MessageBox.Show("Current bounding box has not been fully defined.\r\n" +
+                                "Define both rectangle points and try again.", "Operation invalid!");
+                return;
+            }
+            _currentImageExample.Bounds.Add(_currentImageBound);
+            ResetCurrentBound();
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
@@ -191,134 +300,47 @@ namespace ImageDatasetBuilder
             MouseEventArgs mouseEventArgs = (MouseEventArgs)e;
             var coordinates = mouseEventArgs.Location;
 
-            if (!_isLeftUpCornerDefined)
+            if (coordinates.X < 0 || coordinates.X > _currentImageExample.Width ||
+                coordinates.Y < 0 || coordinates.Y > _currentImageExample.Height)
             {
-                _leftUpCorner = coordinates;
-                _isLeftUpCornerDefined = true;
+                throw new Exception("Point coordinates invalid");
+            }
+
+            if (_currentFrameState == ObjectFrameState.NotDefined)
+            {
+                UpdateCurrentBoundLuPoint(coordinates);
+                _currentFrameState = ObjectFrameState.LuPointLocked;
             }
             else
             {
-                if (coordinates.X <= _leftUpCorner.X ||
-                    coordinates.Y <= _leftUpCorner.Y)
+                if (coordinates.X <= _currentImageBound.Item2.X ||
+                    coordinates.Y <= _currentImageBound.Item2.Y)
                 {
                     MessageBox.Show("Selected point do not make valid rectangle.\r\n" +
                                     "Try again.", "Point invalid!");
                     return;
                 }
-                _rightDownCorner = coordinates;
-                _areObjectBoundingsDefined = true;
+                UpdateCurrentBoundRdPoint(coordinates);
+                _currentFrameState = ObjectFrameState.Defined;
             }
+            UpdateUI();
         }
 
         private void UpdateUI()
         {
-            textBox.Clear();
-            foreach (var taggedObject in _definedImageObjects)
-            {
-                textBox.AppendText(taggedObject + "\r\n");
-            }
+            classLabel.Text = HelperStructures.ObjectClassUserFriendlyMapping[_currentImageBound.Item1];
+            currentLuXLabel.Text = _currentImageBound.Item2.X.ToString();
+            currentLuYLabel.Text = _currentImageBound.Item2.Y.ToString();
+            currentRdXLabel.Text = _currentImageBound.Item3.X.ToString();
+            currentRdYLabel.Text = _currentImageBound.Item3.Y.ToString();
 
-            sourceFileLabel.Text = _unprocessedImagePathEnumerator.Current.ToString();
-            //outputFileLabel.Text = CreateCurrentExampleFilename(); // TODO there can be many files
-            sizeLabel.Text = "(w=" + _image.Width + ", h=" + _image.Height + ")";
+            currentImageBoundsTextBox.Clear();
+            currentImageBoundsTextBox.AppendText(_currentImageExample.ToString());
+
+            sourceFileLabel.Text = Path.GetFileName(_currentImageExample.Filename);
+            sizeLabel.Text = "[w=" + Convert.ToInt32(_currentImageExample.Width) + ", h=" + Convert.ToInt32(_currentImageExample.Height) + "]";
         }
-
-        private string CreateCurrentExampleFilename()
-        {
-            string outputFileName;
-            if (!_definedImageObjects.Any())
-            {
-                outputFileName = string.Empty;
-            }
-            else if (_definedImageObjects.Count() == 1)
-            {
-                var objectClass = _definedImageObjects[0].Class;
-                outputFileName = objectClass + "_" + _indexGenerator.NextIndex(HelperStructures.ObjectClassMapping.
-                    FirstOrDefault(p => p.Value == objectClass).Key) + ImageExtension;
-                // Carefully with FirstOrDefault() -> ObjectClassMapping must contain objectClass value to have this working.
-            }
-            else
-            {
-                outputFileName = "multi_" + _indexGenerator.NextMultiIndex() + ImageExtension;
-            }
-
-            return outputFileName;
-        }
-
-        private void ClearPreviousObjectDefinition()
-        {
-            if (!_definedImageObjects.Any())
-            {
-                MessageBox.Show("Action invalid.\r\nNo object definitions have been defined.", "Invalid action!");
-                return;
-            }
-
-            _definedImageObjects.RemoveAt(_definedImageObjects.Count - 1);
-        }
-
-        private void SaveCurrentImageData()
-        {
-            if (_definedImageObjects.Count == 0)
-            {
-                MessageBox.Show("No objects defined on the image. Define at least one and try again.",
-                    "No defined objects!");
-                return;
-            }
-
-            if (_definedImageObjects.Count == 1)
-            {
-
-                _definedImageObjects[0].Filename = CreateCurrentExampleFilename();
-            }
-            else
-            {
-                foreach (var imageExample in _definedImageObjects)
-                {
-                    imageExample.Filename = CreateCurrentExampleFilename();
-                }
-            }
-
-            if (File.Exists(CsvPath))
-            {
-                _csvService.AppendToCsv(CsvPath, _definedImageObjects);
-            }
-            else
-            {
-                _csvService.WriteCsv(CsvPath, _definedImageObjects);
-            }
-
-            foreach (var imageExample in _definedImageObjects)
-            {
-                File.Move(UnprocessedFilesPath + _unprocessedImagePathEnumerator.Current, ProcessedFilesPath + imageExample.Filename);
-            }
-
-            _definedImageObjects.Clear();
-            _isLeftUpCornerDefined = false;
-            _areObjectBoundingsDefined = false;
-            _isObjectClassChoosen = false;
-        }
-
-        private void LoadNextImage()
-        {
-
-            if (pictureBox.Image != null)
-            {
-                _image.Dispose();
-                pictureBox.Image.Dispose();
-            }
-
-            if (_unprocessedImagePathEnumerator.MoveNext())
-            {
-                _image = Image.FromFile(_unprocessedImagePathEnumerator.Current.ToString());
-                pictureBox.Image = _image;
-            }
-            else
-            {
-                // TODO end of raw image data -> handle this
-            }
-        }
-
-
+        
         // TODO I have not touched anything below
         ///////////////////////////
         private void DrawRectangles()
@@ -326,7 +348,7 @@ namespace ImageDatasetBuilder
 
             //
             /*
-            foreach (Frame element in _definedImageObjects)
+            foreach (Frame element in _processedImageExamples)
             {
                 g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(Convert.ToInt32(element.XMin), Convert.ToInt32(element.YMin), Convert.ToInt32(element.XMax), Convert.ToInt32(element.YMax)));
             }
@@ -337,10 +359,10 @@ namespace ImageDatasetBuilder
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!_leftUpCorner.IsEmpty)
-            {
-                DrawRectangles();
-            }
+            //if (!_leftUpCorner.IsEmpty)
+            //{
+            //    DrawRectangles();
+            //}
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -348,5 +370,6 @@ namespace ImageDatasetBuilder
 
         }
 
+        
     }
 }
