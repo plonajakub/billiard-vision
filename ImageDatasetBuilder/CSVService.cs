@@ -48,7 +48,7 @@ namespace ImageDatasetBuilder
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<ImageExampleEntryMap>();
-                return csv.GetRecords<ImageExampleEntry>();
+                return csv.GetRecords<ImageExampleEntry>().ToList();
             }
         }
 

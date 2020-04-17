@@ -70,18 +70,21 @@ namespace ImageDatasetBuilder
             }
         }
 
-        private void SaveCurrentImageData(bool skipCurrentImage = false)
+        private bool SaveCurrentImageData()
         {
-            if (_currentImageExample != null)
+            if (_currentImageExample == null)
             {
-                if (_currentImageExample.Bounds.Count == 0 && !skipCurrentImage)
-                {
-                    MessageBox.Show("Image has no bounds defined.\r\n" +
-                                    "Define some and try again.", "Action invalid!");
-                    return;
-                }
-                _processedImageExamples.Add(_currentImageExample);
+                return true;
             }
+
+            if (_currentImageExample.Bounds.Count == 0)
+            {
+                MessageBox.Show("Image has no bounds defined.\r\n" +
+                                "Define some and try again.", "Action invalid!");
+                return false;
+            }
+            _processedImageExamples.Add(_currentImageExample);
+            return true;
         }
 
         /// <summary>
@@ -91,14 +94,14 @@ namespace ImageDatasetBuilder
         /// Requires all data in _processedImageExamples to be valid.
         /// </remarks>
         /// </summary>
-        private void SaveProcessedImageData()
+        private bool SaveProcessedImageData()
         {
             if (_processedImageExamples.Count == 0)
             {
                 MessageBox.Show("No processed images.\r\n" +
                                 "Process at least one and try again.",
                     "Action invalid!");
-                return;
+                return false;
             }
 
             var oldPathDict = new Dictionary<string, string>();
@@ -112,7 +115,7 @@ namespace ImageDatasetBuilder
                     case 1:
                         newFilename = HelperStructures.ObjectClassMapping[imageExample.Bounds[0].Item1] +
                                       "_" +
-                                      _indexGenerator.NextIndex(imageExample.Bounds[0].Item1) + // TODO Change this to parametrized version of NextIndex()
+                                      _indexGenerator.NextIndex(imageExample.Bounds[0].Item1) +
                                       ImageExtension;
                         break;
                     default:
@@ -143,6 +146,7 @@ namespace ImageDatasetBuilder
             }
 
             _processedImageExamples.Clear();
+            return true;
         }
 
         private void LoadNextImage()
@@ -153,7 +157,6 @@ namespace ImageDatasetBuilder
                 var currentImagePath = _unprocessedImagePathEnumerator.Current.ToString();
                 currentImagePictureBox.Image = Image.FromFile(currentImagePath);
 
-                _currentFrameState = ObjectFrameState.NotDefined;
                 _currentImageExample = new ImageExample
                 {
                     Filename = currentImagePath,
@@ -171,6 +174,19 @@ namespace ImageDatasetBuilder
                     "All images processed!");
                 Close();
             }
+        }
+
+        private void NextImage()
+        {
+            if (!SaveCurrentImageData())
+            {
+                return;
+            }
+            if (!SaveProcessedImageData())
+            {
+                return;
+            }
+            LoadNextImage();
         }
 
         private void UpdateCurrentBoundClass(ObjectClass newClass)
@@ -259,9 +275,14 @@ namespace ImageDatasetBuilder
                     SaveCurrentBound();
                     break;
                 case Keys.Space:
-                    SaveCurrentImageData();
-                    SaveProcessedImageData();
-                    LoadNextImage();
+                    if (e.Modifiers == Keys.Control)
+                    {
+                        LoadNextImage();
+                    }
+                    else
+                    {
+                        NextImage();
+                    }
                     break;
             }
             UpdateUI();
