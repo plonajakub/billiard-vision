@@ -112,13 +112,13 @@ namespace ImageDatasetBuilder
                     case 1:
                         newFilename = HelperStructures.ObjectClassMapping[imageExample.Bounds[0].Item1] +
                                       "_" +
-                                      _indexGenerator.NextB1Index() + // TODO Change this to parametrized version of NextIndex()
+                                      _indexGenerator.NextIndex(imageExample.Bounds[0].Item1) + // TODO Change this to parametrized version of NextIndex()
                                       ImageExtension;
                         break;
                     default:
                         newFilename = "multi" +
                                       "_" +
-                                       _indexGenerator.NextMultiIndex() +
+                                       _indexGenerator.NextIndex() +
                                       ImageExtension;
                         break;
                 }
@@ -274,6 +274,7 @@ namespace ImageDatasetBuilder
                 MessageBox.Show("No bounding boxes have been defined.\r\n" +
                                 "Define some and try again.", "Invalid action!");
                 return;
+
             }
 
             _currentImageExample.Bounds.RemoveAt(_currentImageExample.Bounds.Count - 1);
