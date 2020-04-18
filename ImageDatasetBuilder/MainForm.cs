@@ -322,7 +322,9 @@ namespace ImageDatasetBuilder
             if (coordinates.X < 0 || coordinates.X > _currentImageExample.Width ||
                 coordinates.Y < 0 || coordinates.Y > _currentImageExample.Height)
             {
-                throw new Exception("Point coordinates invalid");
+                MessageBox.Show("You have tried to mark an area outside the image.\r\n" +
+                                "Try again.", "Invalid data!");
+                return;
             }
 
             if (_currentFrameState == ObjectFrameState.NotDefined)
@@ -335,7 +337,7 @@ namespace ImageDatasetBuilder
                 if (coordinates.X <= _currentImageBound.Item2.X ||
                     coordinates.Y <= _currentImageBound.Item2.Y)
                 {
-                    MessageBox.Show("Selected point do not make valid rectangle.\r\n" +
+                    MessageBox.Show("Selected point do not make a valid rectangle.\r\n" +
                                     "Try again.", "Point invalid!");
                     return;
                 }
@@ -361,11 +363,8 @@ namespace ImageDatasetBuilder
             DrawRectangles();
         }
         
-        // TODO I have not touched anything below
-        ///////////////////////////
         private void DrawRectangles()
         {
-
             using (Graphics g = Graphics.FromImage(currentImagePictureBox.Image))
             {
                 g.Clear(Color.Transparent);
@@ -383,13 +382,11 @@ namespace ImageDatasetBuilder
             }
 
             currentImagePictureBox.Refresh();
-
         }
 
         private Rectangle RectangleFromPoints(Point upperBound, Point lowerBound)
         {
             return new Rectangle(upperBound, new Size(lowerBound.X - upperBound.X, lowerBound.Y - upperBound.Y));
         }
-
     }
 }
