@@ -112,7 +112,7 @@ namespace ImageDatasetBuilder
                     case 1:
                         newFilename = HelperStructures.ObjectClassMapping[imageExample.Bounds[0].Item1] +
                                       "_" +
-                                      _indexGenerator.NextIndex(imageExample.Bounds[0].Item1) + // TODO Change this to parametrized version of NextIndex()
+                                      _indexGenerator.NextIndex(imageExample.Bounds[0].Item1) +
                                       ImageExtension;
                         break;
                     default:
@@ -136,7 +136,7 @@ namespace ImageDatasetBuilder
                 CsvService.WriteCsv(CsvPath, _processedImageExamples);
             }
 
-            currentImagePictureBox.Image?.Dispose();
+            currentImagePictureBox.BackgroundImage?.Dispose();
             foreach (var imageExample in _processedImageExamples)
             {
                 File.Move(oldPathDict[imageExample.Filename], ProcessedFilesPath + imageExample.Filename);
@@ -151,15 +151,16 @@ namespace ImageDatasetBuilder
             {
                 Debug.Assert(_unprocessedImagePathEnumerator.Current != null, "_unprocessedImagePathEnumerator.Current != null");
                 var currentImagePath = _unprocessedImagePathEnumerator.Current.ToString();
-                currentImagePictureBox.Image = Image.FromFile(currentImagePath);
+                currentImagePictureBox.BackgroundImage = Image.FromFile(currentImagePath);
+                currentImagePictureBox.Image = new Bitmap(currentImagePictureBox.BackgroundImage.Width, currentImagePictureBox.BackgroundImage.Height);
 
                 _currentFrameState = ObjectFrameState.NotDefined;
                 _currentImageExample = new ImageExample
                 {
                     Filename = currentImagePath,
                     ImageFormat = HelperStructures.ImageFormatMapping[ImageFormat.PNG],
-                    Width = currentImagePictureBox.Image.Width,
-                    Height = currentImagePictureBox.Image.Height
+                    Width = currentImagePictureBox.BackgroundImage.Width,
+                    Height = currentImagePictureBox.BackgroundImage.Height
                 };
                 ResetCurrentBound();
             }
@@ -336,6 +337,7 @@ namespace ImageDatasetBuilder
 
             sourceFileLabel.Text = Path.GetFileName(_currentImageExample.Filename);
             sizeLabel.Text = "[w=" + Convert.ToInt32(_currentImageExample.Width) + ", h=" + Convert.ToInt32(_currentImageExample.Height) + "]";
+            DrawRectangles();
         }
         
         // TODO I have not touched anything below
@@ -343,30 +345,30 @@ namespace ImageDatasetBuilder
         private void DrawRectangles()
         {
 
-            //
-            /*
-            foreach (Frame element in _processedImageExamples)
+            using (Graphics g = Graphics.FromImage(currentImagePictureBox.Image))
             {
-                g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(Convert.ToInt32(element.XMin), Convert.ToInt32(element.YMin), Convert.ToInt32(element.XMax), Convert.ToInt32(element.YMax)));
+                g.Clear(Color.Transparent);
+                var pen = new Pen(Color.Black);
+                foreach (var (_, upperCorner, lowerCorner) in _currentImageExample.Bounds)
+                {
+                    g.DrawRectangle(pen, RectangleFromPoints(upperCorner, lowerCorner));
+                }
+
+                pen.Color = Color.Orange;
+                if (_currentFrameState == ObjectFrameState.Defined)
+                {
+                    g.DrawRectangle(pen, RectangleFromPoints(_currentImageBound.Item2, _currentImageBound.Item3));
+                }
             }
-            g.DrawRectangle(Pens.Black, Rectangle.FromLTRB(leftUpCorner.X, leftUpCorner.Y, pictureBox1.PointToClient(Cursor.Position).X, pictureBox1.PointToClient(Cursor.Position).Y));
-            g.Dispose();
-            */
+
+            currentImagePictureBox.Refresh();
+
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private Rectangle RectangleFromPoints(Point upperBound, Point lowerBound)
         {
-            //if (!_leftUpCorner.IsEmpty)
-            //{
-            //    DrawRectangles();
-            //}
+            return new Rectangle(upperBound, new Size(lowerBound.X - upperBound.X, lowerBound.Y - upperBound.Y));
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        
     }
 }

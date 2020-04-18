@@ -1,4 +1,6 @@
-﻿namespace ImageDatasetBuilder
+﻿using System.Drawing;
+
+namespace ImageDatasetBuilder
 {
     partial class MainForm
     {
@@ -142,8 +144,6 @@
             this.currentImagePictureBox.TabIndex = 0;
             this.currentImagePictureBox.TabStop = false;
             this.currentImagePictureBox.Click += new System.EventHandler(this.PictureBox_Click);
-            this.currentImagePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            this.currentImagePictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // currentLuXConstantLabel
             // 
