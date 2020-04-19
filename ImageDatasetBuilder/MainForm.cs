@@ -370,9 +370,15 @@ namespace ImageDatasetBuilder
             {
                 g.Clear(Color.Transparent);
                 var pen = new Pen(Color.Black);
-                foreach (var (_, upperCorner, lowerCorner) in _currentImageExample.Bounds)
+                var brush = new SolidBrush(Color.Black);
+                var font = new Font(FontFamily.GenericSansSerif, 12);
+                foreach (var (type, upperCorner, lowerCorner) in _currentImageExample.Bounds)
                 {
+                    brush.Color = Color.Black;
                     g.DrawRectangle(pen, RectangleFromPoints(upperCorner, lowerCorner));
+                    g.FillRectangle(brush, new Rectangle(upperCorner.X,upperCorner.Y - 16, 64, 16));
+                    brush.Color = Color.White;
+                    g.DrawString(type.ToString(), font, brush, new RectangleF(upperCorner.X, upperCorner.Y - 16, 64, 16));
                 }
 
                 pen.Color = Color.Orange;
@@ -389,5 +395,6 @@ namespace ImageDatasetBuilder
         {
             return new Rectangle(upperBound, new Size(lowerBound.X - upperBound.X, lowerBound.Y - upperBound.Y));
         }
+
     }
 }
