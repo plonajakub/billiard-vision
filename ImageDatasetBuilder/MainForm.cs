@@ -362,6 +362,7 @@ namespace ImageDatasetBuilder
             sourceFileLabel.Text = Path.GetFileName(_currentImageExample.Filename);
             sizeLabel.Text = "[w=" + Convert.ToInt32(_currentImageExample.Width) + ", h=" + Convert.ToInt32(_currentImageExample.Height) + "]";
             DrawRectangles();
+            DrawFirstCornerIndicator();
         }
         
         private void DrawRectangles()
@@ -391,6 +392,16 @@ namespace ImageDatasetBuilder
             currentImagePictureBox.Refresh();
         }
 
+        private void DrawFirstCornerIndicator()
+        {
+            if (_currentFrameState != ObjectFrameState.LuPointLocked) return;
+            using (var g = Graphics.FromImage(currentImagePictureBox.Image))
+            {
+                var brush = new SolidBrush(Color.Black);
+                g.FillRectangle(brush, _currentImageBound.Item2.X, _currentImageBound.Item2.Y, 2, 2);
+            }
+            currentImagePictureBox.Refresh();
+        }
         private Rectangle RectangleFromPoints(Point upperBound, Point lowerBound)
         {
             return new Rectangle(upperBound, new Size(lowerBound.X - upperBound.X, lowerBound.Y - upperBound.Y));

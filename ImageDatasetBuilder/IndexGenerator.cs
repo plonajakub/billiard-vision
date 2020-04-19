@@ -13,7 +13,7 @@ namespace ImageDatasetBuilder
 {
     public class IndexGenerator
     {
-        static readonly int OFFSET_VALUE = 5000;
+        static readonly int OFFSET_VALUE = 0;
         public IndexGenerator(string datasetPath = @"images\processed\dataset")
         {
             _datasetPath = datasetPath;
