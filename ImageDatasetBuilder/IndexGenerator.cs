@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security;
+using static System.Int32;
 
 
 namespace ImageDatasetBuilder
 {
     public class IndexGenerator
     {
+        static readonly int OFFSET_VALUE = 5000;
         public IndexGenerator(string datasetPath = @"images\processed\dataset")
         {
             _datasetPath = datasetPath;
@@ -33,7 +35,7 @@ namespace ImageDatasetBuilder
             {
                 var filesList = Directory.EnumerateFiles(_datasetPath, objectClass + "*");
 
-                return MaxIndex(filesList);
+                return MaxIndex(filesList) + 1;
             }
             catch (DirectoryNotFoundException)
             {
@@ -55,12 +57,11 @@ namespace ImageDatasetBuilder
 
         private static int MaxIndex(IEnumerable<string> filesList)
         {
-            int maxIndex = 0;
+            int maxIndex = OFFSET_VALUE;
             foreach (var file in filesList)
             {
-                int currentIndex = 0;
                 var fileName = Path.GetFileName(file); //TODO: Validate filename
-                var parsed = Int32.TryParse(fileName.Split('_')[1], out currentIndex);
+                var parsed = TryParse(fileName.Split('_')[1], out var currentIndex);
                 if (parsed)
                 {
                     if (currentIndex > maxIndex)

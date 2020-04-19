@@ -55,6 +55,7 @@ namespace ImageDatasetBuilder
 
         private void InitializeProgram()
         {
+            //TODO: Initialize directory structure if not present
             var unprocessedImagePaths = Directory.GetFiles(UnprocessedFilesPath, ImageFormatPattern, SearchOption.TopDirectoryOnly);
             if (unprocessedImagePaths.Length > 0)
             {
