@@ -84,6 +84,14 @@ namespace ImageDatasetBuilder
                                 "Define some and try again.", "Action invalid!");
                 return false;
             }
+
+            if (_currentFrameState != ObjectFrameState.NotDefined)
+            {
+                MessageBox.Show("Last bound has not been confirmed.\r\n" +
+                                "Confirm current bound, clear the bound or skip the image.", "Warning");
+                return false;
+            }
+
             _processedImageExamples.Add(_currentImageExample);
             return true;
         }
