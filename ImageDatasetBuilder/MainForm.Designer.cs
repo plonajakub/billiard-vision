@@ -37,19 +37,21 @@ namespace ImageDatasetBuilder
             this.sourceFileLabel = new System.Windows.Forms.Label();
             this.sizeLabel = new System.Windows.Forms.Label();
             this.infoPanel = new System.Windows.Forms.Panel();
-            this.currentImagePictureBox = new System.Windows.Forms.PictureBox();
-            this.currentLuXConstantLabel = new System.Windows.Forms.Label();
-            this.currentLuXLabel = new System.Windows.Forms.Label();
-            this.currentLuYConstantLabel = new System.Windows.Forms.Label();
-            this.currentLuYLabel = new System.Windows.Forms.Label();
-            this.classConstantLabel = new System.Windows.Forms.Label();
-            this.currentBoundsConstantLabel = new System.Windows.Forms.Label();
             this.currentRdYLabel = new System.Windows.Forms.Label();
             this.currentRdYConstantLabel = new System.Windows.Forms.Label();
             this.currentRdXLabel = new System.Windows.Forms.Label();
             this.currentRdXConstantLabel = new System.Windows.Forms.Label();
+            this.currentBoundsConstantLabel = new System.Windows.Forms.Label();
+            this.classConstantLabel = new System.Windows.Forms.Label();
+            this.currentLuYLabel = new System.Windows.Forms.Label();
+            this.currentLuYConstantLabel = new System.Windows.Forms.Label();
+            this.currentLuXLabel = new System.Windows.Forms.Label();
+            this.currentLuXConstantLabel = new System.Windows.Forms.Label();
+            this.currentImagePictureBox = new System.Windows.Forms.PictureBox();
+            this.imagePanel = new System.Windows.Forms.Panel();
             this.infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImagePictureBox)).BeginInit();
+            this.imagePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // classLabel
@@ -135,76 +137,6 @@ namespace ImageDatasetBuilder
             this.infoPanel.Size = new System.Drawing.Size(362, 601);
             this.infoPanel.TabIndex = 1;
             // 
-            // currentImagePictureBox
-            // 
-            this.currentImagePictureBox.Location = new System.Drawing.Point(381, 13);
-            this.currentImagePictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.currentImagePictureBox.Name = "currentImagePictureBox";
-            this.currentImagePictureBox.Size = new System.Drawing.Size(798, 602);
-            this.currentImagePictureBox.TabIndex = 0;
-            this.currentImagePictureBox.TabStop = false;
-            this.currentImagePictureBox.Click += new System.EventHandler(this.PictureBox_Click);
-            // 
-            // currentLuXConstantLabel
-            // 
-            this.currentLuXConstantLabel.AutoSize = true;
-            this.currentLuXConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.currentLuXConstantLabel.Location = new System.Drawing.Point(19, 80);
-            this.currentLuXConstantLabel.Name = "currentLuXConstantLabel";
-            this.currentLuXConstantLabel.Size = new System.Drawing.Size(43, 25);
-            this.currentLuXConstantLabel.TabIndex = 9;
-            this.currentLuXConstantLabel.Text = "X1:";
-            // 
-            // currentLuXLabel
-            // 
-            this.currentLuXLabel.AutoSize = true;
-            this.currentLuXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.currentLuXLabel.Location = new System.Drawing.Point(74, 80);
-            this.currentLuXLabel.Name = "currentLuXLabel";
-            this.currentLuXLabel.Size = new System.Drawing.Size(19, 25);
-            this.currentLuXLabel.TabIndex = 10;
-            this.currentLuXLabel.Text = "-";
-            // 
-            // currentLuYConstantLabel
-            // 
-            this.currentLuYConstantLabel.AutoSize = true;
-            this.currentLuYConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.currentLuYConstantLabel.Location = new System.Drawing.Point(19, 113);
-            this.currentLuYConstantLabel.Name = "currentLuYConstantLabel";
-            this.currentLuYConstantLabel.Size = new System.Drawing.Size(42, 25);
-            this.currentLuYConstantLabel.TabIndex = 11;
-            this.currentLuYConstantLabel.Text = "Y1:";
-            // 
-            // currentLuYLabel
-            // 
-            this.currentLuYLabel.AutoSize = true;
-            this.currentLuYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.currentLuYLabel.Location = new System.Drawing.Point(74, 113);
-            this.currentLuYLabel.Name = "currentLuYLabel";
-            this.currentLuYLabel.Size = new System.Drawing.Size(19, 25);
-            this.currentLuYLabel.TabIndex = 12;
-            this.currentLuYLabel.Text = "-";
-            // 
-            // classConstantLabel
-            // 
-            this.classConstantLabel.AutoSize = true;
-            this.classConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.classConstantLabel.Location = new System.Drawing.Point(11, 27);
-            this.classConstantLabel.Name = "classConstantLabel";
-            this.classConstantLabel.Size = new System.Drawing.Size(112, 39);
-            this.classConstantLabel.TabIndex = 13;
-            this.classConstantLabel.Text = "Class:";
-            // 
-            // currentBoundsConstantLabel
-            // 
-            this.currentBoundsConstantLabel.AutoSize = true;
-            this.currentBoundsConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.currentBoundsConstantLabel.Location = new System.Drawing.Point(13, 145);
-            this.currentBoundsConstantLabel.Name = "currentBoundsConstantLabel";
-            this.currentBoundsConstantLabel.Size = new System.Drawing.Size(153, 25);
-            this.currentBoundsConstantLabel.TabIndex = 14;
-            this.currentBoundsConstantLabel.Text = "Current bounds:";
-            // 
             // currentRdYLabel
             // 
             this.currentRdYLabel.AutoSize = true;
@@ -245,12 +177,93 @@ namespace ImageDatasetBuilder
             this.currentRdXConstantLabel.TabIndex = 15;
             this.currentRdXConstantLabel.Text = "X2:";
             // 
+            // currentBoundsConstantLabel
+            // 
+            this.currentBoundsConstantLabel.AutoSize = true;
+            this.currentBoundsConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentBoundsConstantLabel.Location = new System.Drawing.Point(13, 145);
+            this.currentBoundsConstantLabel.Name = "currentBoundsConstantLabel";
+            this.currentBoundsConstantLabel.Size = new System.Drawing.Size(153, 25);
+            this.currentBoundsConstantLabel.TabIndex = 14;
+            this.currentBoundsConstantLabel.Text = "Current bounds:";
+            // 
+            // classConstantLabel
+            // 
+            this.classConstantLabel.AutoSize = true;
+            this.classConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.classConstantLabel.Location = new System.Drawing.Point(11, 27);
+            this.classConstantLabel.Name = "classConstantLabel";
+            this.classConstantLabel.Size = new System.Drawing.Size(112, 39);
+            this.classConstantLabel.TabIndex = 13;
+            this.classConstantLabel.Text = "Class:";
+            // 
+            // currentLuYLabel
+            // 
+            this.currentLuYLabel.AutoSize = true;
+            this.currentLuYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentLuYLabel.Location = new System.Drawing.Point(74, 113);
+            this.currentLuYLabel.Name = "currentLuYLabel";
+            this.currentLuYLabel.Size = new System.Drawing.Size(19, 25);
+            this.currentLuYLabel.TabIndex = 12;
+            this.currentLuYLabel.Text = "-";
+            // 
+            // currentLuYConstantLabel
+            // 
+            this.currentLuYConstantLabel.AutoSize = true;
+            this.currentLuYConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentLuYConstantLabel.Location = new System.Drawing.Point(19, 113);
+            this.currentLuYConstantLabel.Name = "currentLuYConstantLabel";
+            this.currentLuYConstantLabel.Size = new System.Drawing.Size(42, 25);
+            this.currentLuYConstantLabel.TabIndex = 11;
+            this.currentLuYConstantLabel.Text = "Y1:";
+            // 
+            // currentLuXLabel
+            // 
+            this.currentLuXLabel.AutoSize = true;
+            this.currentLuXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentLuXLabel.Location = new System.Drawing.Point(74, 80);
+            this.currentLuXLabel.Name = "currentLuXLabel";
+            this.currentLuXLabel.Size = new System.Drawing.Size(19, 25);
+            this.currentLuXLabel.TabIndex = 10;
+            this.currentLuXLabel.Text = "-";
+            // 
+            // currentLuXConstantLabel
+            // 
+            this.currentLuXConstantLabel.AutoSize = true;
+            this.currentLuXConstantLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentLuXConstantLabel.Location = new System.Drawing.Point(19, 80);
+            this.currentLuXConstantLabel.Name = "currentLuXConstantLabel";
+            this.currentLuXConstantLabel.Size = new System.Drawing.Size(43, 25);
+            this.currentLuXConstantLabel.TabIndex = 9;
+            this.currentLuXConstantLabel.Text = "X1:";
+            // 
+            // currentImagePictureBox
+            // 
+            this.currentImagePictureBox.Location = new System.Drawing.Point(5, 3);
+            this.currentImagePictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.currentImagePictureBox.Name = "currentImagePictureBox";
+            this.currentImagePictureBox.Size = new System.Drawing.Size(1080, 1920);
+            this.currentImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.currentImagePictureBox.TabIndex = 0;
+            this.currentImagePictureBox.TabStop = false;
+            this.currentImagePictureBox.Click += new System.EventHandler(this.PictureBox_Click);
+            // 
+            // imagePanel
+            // 
+            this.imagePanel.AutoScroll = true;
+            this.imagePanel.Controls.Add(this.currentImagePictureBox);
+            this.imagePanel.Location = new System.Drawing.Point(382, 10);
+            this.imagePanel.Name = "imagePanel";
+            this.imagePanel.Size = new System.Drawing.Size(1084, 802);
+            this.imagePanel.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 626);
-            this.Controls.Add(this.currentImagePictureBox);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1468, 868);
+            this.Controls.Add(this.imagePanel);
             this.Controls.Add(this.infoPanel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
@@ -260,6 +273,8 @@ namespace ImageDatasetBuilder
             this.infoPanel.ResumeLayout(false);
             this.infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentImagePictureBox)).EndInit();
+            this.imagePanel.ResumeLayout(false);
+            this.imagePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -283,6 +298,7 @@ namespace ImageDatasetBuilder
         private System.Windows.Forms.Label currentRdYConstantLabel;
         private System.Windows.Forms.Label currentRdXLabel;
         private System.Windows.Forms.Label currentRdXConstantLabel;
+        private System.Windows.Forms.Panel imagePanel;
     }
 }
 
