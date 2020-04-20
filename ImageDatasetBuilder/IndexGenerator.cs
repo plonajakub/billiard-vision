@@ -61,7 +61,7 @@ namespace ImageDatasetBuilder
             foreach (var file in filesList)
             {
                 var fileName = Path.GetFileName(file); //TODO: Validate filename
-                var parsed = TryParse(fileName.Split('_')[1], out var currentIndex);
+                var parsed = TryParse(fileName.Split('_')[1].Split('.')[0], out var currentIndex);
                 if (parsed)
                 {
                     if (currentIndex > maxIndex)
