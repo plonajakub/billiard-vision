@@ -1,14 +1,16 @@
 import tensorflow as tf
 import pandas as pd
+from progress.bar import Bar
 
 from object_detection.utils import dataset_util
 
-
+# TODO export as script arguments
 DATA_ROOT_PATH = '/home/jakub/app_projects/rpo/data/test/processed/'
 IMG_PATH = DATA_ROOT_PATH + 'dataset/'
 CSV_PATH = DATA_ROOT_PATH + 'description.csv'
-TFRecord_PATH = DATA_ROOT_PATH + 'tfrecord/billard-vision.tfr'
+TFRECORD_PATH = DATA_ROOT_PATH + 'tfrecord/billard-vision.tfr'
 
+# TODO read from protobuf (.prbtxt)
 classes_id = {'b1': 1, 'b2': 2, 'b3': 3, 'b4': 4, 'b5': 5, 'b6': 6, 'b7': 7, 'b8': 8,
               'b9': 9, 'b10': 10, 'b11': 11, 'b12': 12, 'b13': 13, 'b14': 14, 'b15': 15,
               'bw': 16, 'h': 17}
@@ -17,8 +19,8 @@ classes_id = {'b1': 1, 'b2': 2, 'b3': 3, 'b4': 4, 'b5': 5, 'b6': 6, 'b7': 7, 'b8
 class Example:
 
     def __init__(self, filename, img_format, height, width):
-        self.filename = bytes(filename, 'utf-8')
-        self.img_format = bytes(img_format, 'utf-8')
+        self.filename = filename
+        self.img_format = img_format
         self.height = height
         self.width = width
         self.xmins = []
@@ -34,14 +36,14 @@ def create_tf_example(example):
     width = example.width
     filename = example.filename
     encoded_image_data = None
-    with open(IMG_PATH + filename.decode(), 'rb') as img:
+    with open(IMG_PATH + example.filename.decode(), 'rb') as img:
         encoded_image_data = img.read()
-    image_format = example.img_format 
+    image_format = example.img_format
 
     xmins = example.xmins
-    xmaxs = example.xmaxs 
+    xmaxs = example.xmaxs
     ymins = example.ymins
-    ymaxs = example.ymaxs 
+    ymaxs = example.ymaxs
 
     classes_text = example.classes_text
     classes = example.classes
@@ -64,15 +66,16 @@ def create_tf_example(example):
 
 
 def main(_):
-    writer = tf.python_io.TFRecordWriter(TFRecord_PATH)
+    writer = tf.python_io.TFRecordWriter(TFRECORD_PATH)
 
     description_df = pd.read_csv(CSV_PATH)
     img_files = description_df.filename.unique()
 
+    bar = Bar('Processing', max=len(img_files))
     for img_file in img_files:
         file_row = description_df[description_df.filename == img_file].iloc[0]
         example = Example(
-            file_row.filename, file_row.img_format, file_row.height, file_row.width)
+            bytes(file_row.filename, 'utf-8'), bytes(file_row.img_format, 'utf-8'), file_row.height, file_row.width)
         for _, row in description_df[description_df.filename == img_file].iterrows():
             example.xmins.append(row['x_min'] / row['width'])
             example.ymins.append(row['y_min'] / row['height'])
@@ -82,8 +85,10 @@ def main(_):
             example.classes.append(classes_id[row['class']])
         tf_example = create_tf_example(example)
         writer.write(tf_example.SerializeToString())
+        bar.next()
 
     writer.close()
+    bar.finish()
 
 
 if __name__ == '__main__':
