@@ -5,15 +5,15 @@ from progress.bar import Bar
 from object_detection.utils import dataset_util
 
 # TODO export as script arguments
-DATA_ROOT_PATH = '/home/jakub/app_projects/rpo/data/test/processed/'
-IMG_PATH = DATA_ROOT_PATH + 'dataset/'
-CSV_PATH = DATA_ROOT_PATH + 'description.csv'
-TFRECORD_PATH = DATA_ROOT_PATH + 'tfrecord/billard-vision.tfr'
+DATA_ROOT_PATH = 'images/'
+IMG_PATH = DATA_ROOT_PATH + 'test/'
+CSV_PATH = DATA_ROOT_PATH + 'test.csv'
+TFRECORD_PATH = DATA_ROOT_PATH + '../annotations/test.record'
 
 # TODO read from protobuf (.prbtxt)
 classes_id = {'b1': 1, 'b2': 2, 'b3': 3, 'b4': 4, 'b5': 5, 'b6': 6, 'b7': 7, 'b8': 8,
               'b9': 9, 'b10': 10, 'b11': 11, 'b12': 12, 'b13': 13, 'b14': 14, 'b15': 15,
-              'bw': 16, 'h': 17}
+              'bwhite': 16, 'hole': 17}
 
 
 class Example:
