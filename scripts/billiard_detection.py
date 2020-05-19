@@ -15,7 +15,8 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
 # Define the video stream
-cap = cv2.VideoCapture('billiard_test_data/films/game_1.mp4')  # Change only if you have more than one webcams
+# Change only if you have more than one webcams
+cap = cv2.VideoCapture('billiard_test_data/films/game_1.mp4')
 
 #test_img = cv2.imread('billiard_test_data/imgs/multi_1.png')
 
@@ -56,6 +57,53 @@ def load_image_into_numpy_array(image):
         (im_height, im_width, 3)).astype(np.uint8)
 
 
+class DetectedObj:
+    def __init__(self, cls=None, coords=None, score=None):
+        self.cls = cls
+        self.coords = coords
+        self.score = score
+        self.centerX = None
+        self.centerY = None
+
+
+def detect_collision(detection_data, objects_to_check,
+                     max_distance=0.01, detection_treshold=0.5):
+    if detection_data['num_detections'] < 2:
+        return False
+
+    if objects_to_check[0] == objects_to_check[1]:
+        raise ValueError()
+
+    obj1 = DetectedObj(objects_to_check[0])
+    obj2 = DetectedObj(objects_to_check[1])
+
+    for i in range(int(detection_data['num_detections'])):
+        if detection_data['scores'][i] < detection_treshold:
+            break
+        if obj1.coords is None and detection_data['classes'][i] == obj1.cls:
+            obj1.coords = detection_data['boxes'][i]
+        if obj2.coords is None and detection_data['classes'][i] == obj2.cls:
+            obj2.coords = detection_data['boxes'][i]
+        if obj1.coords is not None and obj2.coords is not None:
+            break
+
+    if obj1.coords is None or obj2.coords is None:
+        return False
+
+    # coords: ymin, xmin, ymax, xmax
+    # these are normalized 0-1 values
+    obj1.centerX = (obj1.coords[1] + obj1.coords[3]) / 2
+    obj1.centerY = (obj1.coords[0] + obj1.coords[2]) / 2
+    obj2.centerX = (obj2.coords[1] + obj2.coords[3]) / 2
+    obj2.centerY = (obj2.coords[0] + obj2.coords[2]) / 2
+
+    euclidian_distance = ((obj1.centerX - obj2.centerX) **
+                          2 + (obj1.centerY - obj2.centerY) ** 2) ** (1/2)
+    if euclidian_distance <= max_distance:
+        return True
+    return False
+
+
 # Detection
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
@@ -80,12 +128,24 @@ with detection_graph.as_default():
             (boxes, scores, classes, num_detections) = sess.run(
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
+
+            # Detect collision
+            img_objs_data = {
+                'boxes': boxes[0],
+                'scores': scores[0],
+                'classes': classes[0],
+                'num_detections': num_detections[0]
+            }
+            objects_to_check = [2, 9]  # b2, b9
+            collision_present = detect_collision(img_objs_data, objects_to_check, detection_treshold=0)
+
             # Visualization of the results of a detection.
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
                 np.squeeze(classes).astype(np.int32),
-                np.squeeze(scores),
+                # np.squeeze(scores),
+                None,
                 category_index,
                 use_normalized_coordinates=True,
                 line_thickness=8)
