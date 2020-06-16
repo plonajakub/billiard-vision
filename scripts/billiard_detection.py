@@ -21,16 +21,22 @@ cap = cv2.VideoCapture('billiard_test_data/films/game_1.mp4')
 #test_img = cv2.imread('billiard_test_data/imgs/multi_1.png')
 
 # Model directory
-MODEL_NAME = 'output_inference_graph_v1.pb'
+MODEL_NAME = 'model'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
-PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
+PATH_TO_CKPT = MODEL_NAME  + '/saved_model.pb'
 
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = os.path.join('data', 'billiard_objects_label_map.pbtxt')
+PATH_TO_LABELS = os.path.join('annotations', 'label_map.pbtxt')
 
 # Number of classes to detect
 NUM_CLASSES = 17
+
+# White ball id
+BWHITE = 16
+
+# Detection gone counter for every ball
+frames_gone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 # Load a (frozen) Tensorflow model into memory.
 detection_graph = tf.Graph()
@@ -64,6 +70,66 @@ class DetectedObj:
         self.score = score
         self.centerX = None
         self.centerY = None
+
+class Player:
+	def __init__(self, number, name, balls):
+		self.name = name
+		self.balls = balls
+		self.number = number
+
+class GameState:
+	def __init__(self, player1='Player1', player2='Player2'):
+		# Initially all balls are in play
+		self.balls = [ 1, 2, 3, 4, 5, 6, 7, 8, 9,
+					10, 11, 12, 13, 14, 15, BWHITE]
+		self.player1 = Player(1, player1, [1, 2, 3, 4, 5, 6, 7])
+		self.player2 = Player(2, player2, [9, 10, 11, 12, 13, 14, 15])
+		self.turn = 1
+
+	def ball_fall(self, ball):
+
+		player = self.player1 if turn == 1 else self.player2
+
+		# Check if it is white ball
+		if ball == BWHITE:
+			print('Faul caused by player: ', player.name, '! End of the turn.')
+			self.next_turn()
+			return
+
+		try:
+			self.balls.remove(ball)
+		except ValueError:
+			print('Ball ', ball, ' is not in game anymore.')
+			return
+
+
+		# Decide if that was a score
+		self.score(player, ball)
+
+	def score(self, player, ball):
+		if ball in player.balls:
+			print(self.player1, ' has scored!')
+
+		elif ball == 8:
+			if self.is_player_winning(player):
+				print(player.name, ' has won!')
+			else:
+				print(player.name, ' has lost!')
+
+		else:
+			print('Bad shot! Opposing player scores. End of the current player\'s turn.')
+			self.next_turn()
+
+	def next_turn(self):
+		self.turn = 1 if self.turn != 1 else 2
+
+	def is_player_winning(self, player):
+
+		for ball in self.balls:
+			if ball in player.balls:
+				return false
+
+		return true
 
 
 def detect_collision(detection_data, objects_to_check,
@@ -103,7 +169,24 @@ def detect_collision(detection_data, objects_to_check,
         return True
     return False
 
+def detect_fall(detection_data, game_state, frames_gone_treshold=3):
+	for ball in game_state.balls:
 
+		if detect_collision(detection_data, [ball, ball]):
+			frames_gone[ball - 1] = -1
+		else:
+			frames_gone[ball - 1] = frames_gone[ball - 1] - 1
+
+
+		if detect_collision(detection_data, [16, ball]):
+			frames_gone[ball - 1] = frames_gone_treshold
+
+		if frames_gone[ball - 1] == 0:
+			game_state.ball_fall(ball)
+
+
+
+game_state = GameState()
 # Detection
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
@@ -120,8 +203,7 @@ with detection_graph.as_default():
             # Extract detection scores
             scores = detection_graph.get_tensor_by_name('detection_scores:0')
             # Extract detection classes
-            classes = detection_graph.get_tensor_by_name('detection_classes:0')
-            # Extract number of detections
+            classes = detection_graph.get_tensor_by_name('detection_classes:0')            # Extract number of detections
             num_detections = detection_graph.get_tensor_by_name(
                 'num_detections:0')
             # Actual detection.
@@ -136,6 +218,8 @@ with detection_graph.as_default():
                 'classes': classes[0],
                 'num_detections': num_detections[0]
             }
+
+            detect_fall(img_objs_data, game_state, 30)
             objects_to_check = [2, 9]  # b2, b9
             collision_present = detect_collision(img_objs_data, objects_to_check, detection_treshold=0)
 
